@@ -10,7 +10,8 @@
   "devDependencies": {
     "alasql": "^0.4.11",
     "chai": "^4.2.0",
-    "console.table": "^0.10.0"
+    "console.table": "^0.10.0",
+    "react-test-renderer": "^16.8.6"
   },
   "scripts": {
     "start": "react-scripts start",
