@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
-
+import Sun from '../star/Sun'
 
 class Galaxy extends Component{
 
     constructor(props){
+        super(props)
         this.data = props.data
-        this.sunImagePath = props.sunImagePath
-        this.state.orbitsMap = props.orbitsMap // !Check: if orbits map changes, re-render accordingly
+        this.sunSvg = props.sunSvg
+        this.state = {orbitsMap: props.orbitsMap} // !Check: if orbits map changes, re-render accordingly
     }
 
     renderOrbits(){
@@ -15,12 +16,12 @@ class Galaxy extends Component{
     }
 
     render(){
-
+        console.log(this.sunSvg)
         return (
-            <div className='galaxy'>
-                <Sun imagePath={this.sunImagePath} />
+            <g className='galaxy' transform="translate(100,100)">
+                <Sun />
                 {this.renderOrbits()}
-            </div>
+            </g>
         )
 
     }
@@ -34,8 +35,7 @@ Galaxy.defaultProps = {
         [7, 8],
         [9, 10],
         [11, 12, 13, 14] // smallest ellipse, closer to the sun
-    ],
-    sunImagePath: 'static/sun.svg' // under public domain - https://svgsilh.com/ff9800/image/700364.html
+    ]
 }
 
 

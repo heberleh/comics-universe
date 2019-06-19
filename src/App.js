@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min'
 
 import './App.css'
 import Header from './Header'
-import ComicsQueries from '../dataset/'
+import Universe from './components/universe/Universe'
 
 class App extends Component {
 
@@ -24,13 +24,13 @@ class App extends Component {
         <Header title={this.title} author={this.author} authorUrl={this.authorUrl}/>
        
        <div class="row">
-
+          <Universe />
         <div class="col-md-3">          
           
         </div>
 
         <div class="col-md-9">          
-          
+          <img src={require('../static/images/sunFigure.svg') }/>
         </div>
 
        </div>

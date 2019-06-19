@@ -2,17 +2,18 @@
 
 class Character{
 
-    constructor(id){
+    constructor(id, name=undefined, gender=undefined, birthDate=undefined, abilities=[], partners=[], children=[], presentInWorks=[], occupations=[]){
         this._id = id
         
-        this.name = undefined
-        this.gender = undefined
-        this.birthDate = undefined
+        this.name = name
+        this.gender = gender
+        this.birthDate = birthDate
 
-        this._abilities = new Set()
-        this._edges = {partners: new Set(), children: new Set()}
-        this._presentInWorks = new Set()
-        this._occupations = new Set()    
+        this._abilities = abilities
+        this._partners = partners
+        this._children = children
+        this._presentInWorks = presentInWorks
+        this._occupations = occupations
     }
 
     get id(){this._id}
@@ -32,19 +33,39 @@ class Character{
     }
 
     get abilities(){return this._abilities}
-    addAbility(ability){this._abilities.add(ability)}
+    addAbility(ability){
+        if (!(ability in this._abilities)){
+            this._abilities.push(ability)
+        }                
+    }
 
     get occupations(){return this._occupations}
-    addOccupation(occupation){this._occupations.add(occupation)}
+    addOccupation(occupation){
+        if(!(occupation in this._occupations)){
+            this._occupations.push(occupation)
+        }
+    }
 
     get presentInWorks(){return this._presentInWorks}
-    addPresentInWork(work){this._presentInWorks.add(work)}
+    addPresentInWork(work){
+        if(!(work in this._presentInWorks)){
+            this._presentInWorks.push(work)
+        }        
+    }
 
     get children(){return this._edges.children}
-    addChild(child){this._edges.children.add(child)}
+    addChild(child){
+        if (!(child in this._children)){
+            this._children.push(child)
+        }
+    }
 
     get partners(){return this._edges.partners}
-    addPartner(partner){this._edges.partners.add(partner)}
+    addPartner(partner){
+        if(!(partner in this._partners)){
+            this._partners.push(partner)
+        }
+    }
     
 }
 

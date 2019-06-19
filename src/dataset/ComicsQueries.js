@@ -2,6 +2,8 @@ import dcDB from './comics-characters-js-database/src/DcDB'
 import marvelDB from './comics-characters-js-database/src/MarvelDB'
 import Character from './Character'
 
+const fs = require('fs');
+
 class ComicsQueries{
 
    static characters(db){
@@ -29,11 +31,11 @@ class ComicsQueries{
                                   WHERE char = "${id}"`
             db.exec(queryAbilities).forEach(d=>char.addAbility(d.ability))
 
-            let queryOccupation = `SELECT DISTINCT LOWER(occupationLabel) AS occupation FROM occupation\
+            let queryOccupation = `SELECT DISTINCT occupation, LOWER(occupationLabel) AS occupationL FROM occupation\
                                     WHERE char = "${id}"`
-            db.exec(queryOccupation).forEach(d=>char.addOccupation(d.occupation))                       
+            db.exec(queryOccupation).forEach(d=>char.addOccupation(d.occupationL))                       
 
-            let queryWork = `SELECT DISTINCT LOWER(presentInWorkLabel) AS work FROM presentInWork\
+            let queryWork = `SELECT DISTINCT presentInWork, presentInWorkLabel AS work FROM presentInWork\
                                     WHERE char = "${id}"`
             db.exec(queryWork).forEach(d=>char.addPresentInWork(d.work))              
             
@@ -44,18 +46,31 @@ class ComicsQueries{
             let queryPartners = `SELECT DISTINCT partner AS id, partnerLabel AS name FROM partner\
                                     WHERE char = "${id}"`
             db.exec(queryPartners).forEach(partner=>char.addPartner(partner)) 
-
+            
             characters.push(char)
         })
         return characters
     }
 
-    static dcCharacters(){
-        return ComicsQueries.characters(dcDB)
+    static saveDcCharacters(){        
+        let characters = ComicsQueries.characters(dcDB)
+        let data = JSON.stringify(characters)
+
+        fs.writeFile("dcCharacters.json", data, function(err) {
+            if (err) {
+                console.log(err);
+            }
+        });
     }
 
-    static marvelCharacters(){
-        return ComicsQueries.characters(marvelDB)
+    static saveMarvelCharacters(){
+        let characters = ComicsQueries.characters(marvelDB)
+        let data = JSON.stringify(characters)
+        fs.writeFile("marvelCharacters.json", data, function(err) {
+            if (err) {
+                console.log(err);
+            }
+        });
     }
 
     static charactersTotalSkills(){

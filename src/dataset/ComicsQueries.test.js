@@ -31,15 +31,24 @@ describe('Data Management', function() {
 });
 
 describe('Characters Management', function() {
-    describe('Object creation', function() { 
-
-        it('Marvel Character objects', () => {                       
-            ComicsQueries.marvelCharacters()       
-        }); 
-
-        it('DC Character objects', () => {                       
-            ComicsQueries.dcCharacters()       
-        });         
+    describe('Object saving data', function(){
         
+        xit('Marvel json',()=>{
+            ComicsQueries.saveMarvelCharacters();
+            console.log("Saved marvel dataset.")
+        });
+
     });
 });
+
+describe('Characters Management', function() {
+    describe('Object saving data', function(){
+        
+        xit('DC json',()=>{
+            ComicsQueries.saveDcCharacters();
+            console.log("Saved DC dataset.")
+        });
+
+    });
+});
+
