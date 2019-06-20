@@ -23,16 +23,8 @@ class App extends Component {
       <div className="App">
         <Header title={this.title} author={this.author} authorUrl={this.authorUrl}/>
        
-       <div class="row">
+       <div className="d-flex justify-content-center">
           <Universe />
-        <div class="col-md-3">          
-          
-        </div>
-
-        <div class="col-md-9">          
-          <img src={require('../static/images/sunFigure.svg') }/>
-        </div>
-
        </div>
        
       </div>

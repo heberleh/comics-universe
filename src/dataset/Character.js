@@ -16,7 +16,7 @@ class Character{
         this._occupations = occupations
     }
 
-    get id(){this._id}
+    get id(){return this._id}
 
     get initials(){
         if (this.name){

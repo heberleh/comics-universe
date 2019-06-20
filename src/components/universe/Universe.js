@@ -2,11 +2,14 @@ import React, {Component} from 'react'
 import Galaxy from '../galaxy/Galaxy'
 import LoadDataset from '../../../src/dataset/LoadDataset'
 
+import './Universe.css'
+
 class Universe extends Component{
 
     constructor(props){
         super(props)
 
+        this.style = require("./Universe.css")
         this.marvelCharacters = LoadDataset.marvelData()
         this.dcCharacters = LoadDataset.dcData()
 
@@ -16,9 +19,9 @@ class Universe extends Component{
 
     render(){
         return (
-            <svg id="universe" width={400} height={400}>
-                <Galaxy data={this.dcCharacters}  />
-                <Galaxy data={this.marvelCharacters} />
+            <svg id="Universe" width={1600} height={800}>
+                <Galaxy data={this.dcCharacters} comic='marvel'  x={200} y={400}/>
+                <Galaxy data={this.marvelCharacters} comic='dc'  x={800} y={400}/>
             </svg>
         )
     }

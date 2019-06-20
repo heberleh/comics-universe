@@ -1,4 +1,3 @@
-import React from 'react'
 import Character from './Character'
 const marvelData = require('./marvelCharacters.json')
 const dcData = require('./dcCharacters.json')
