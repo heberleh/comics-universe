@@ -19,9 +19,9 @@ class Universe extends Component{
 
     render(){
         return (
-            <svg id="Universe" width={1600} height={800}>
-                <Galaxy data={this.dcCharacters} comic='marvel'  x={200} y={400}/>
-                <Galaxy data={this.marvelCharacters} comic='dc'  x={800} y={400}/>
+            <svg id="Universe" width={1700} height={800}>
+                <Galaxy data={this.dcCharacters} comic='marvel'  x={400} y={400}/>
+                <Galaxy data={this.marvelCharacters} comic='dc'  x={1100} y={400}/>
             </svg>
         )
     }
