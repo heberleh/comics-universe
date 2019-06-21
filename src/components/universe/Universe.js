@@ -13,6 +13,9 @@ class Universe extends Component{
         this.marvelCharacters = LoadDataset.marvelData()
         this.dcCharacters = LoadDataset.dcData()
 
+        this.marvelCharacters.sort((a,b)=> (a,b) => (a.initials > b.initials) ? 1 : ((b.initials > a.initials) ? -1 : 0))
+        this.dcCharacters.sort((a,b)=> (a,b) => (a.initials > b.initials) ? 1 : ((b.initials > a.initials) ? -1 : 0))
+
         if (this.dcCharacters === undefined) {throw new Error("ComicsQueries.saveDcCharacters() should be executed to save the data")}
         if (this.marvelCharacters === undefined) {throw new Error("ComicsQueries.saveMarvelCharacters() should be executed to save the data")}
     }
@@ -20,8 +23,8 @@ class Universe extends Component{
     render(){
         return (
             <svg id="Universe" width={1700} height={800}>
-                <Galaxy data={this.dcCharacters} comic='marvel'  x={400} y={400}/>
-                <Galaxy data={this.marvelCharacters} comic='dc'  x={1100} y={400}/>
+                <Galaxy data={this.dcCharacters} comic='dc'  x={400} y={400}/>
+                <Galaxy data={this.marvelCharacters} comic='marvel'  x={1100} y={400}/>
             </svg>
         )
     }

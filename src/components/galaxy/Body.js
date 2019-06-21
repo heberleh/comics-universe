@@ -12,7 +12,7 @@ class Body{
 
     static computeBodyType(size, threshold){
         if (size > threshold) return"planet"
-        if (size > 0)               return "star"
+        if (size > 0)         return "star"
         // not present in works 
         return "dust"
     }

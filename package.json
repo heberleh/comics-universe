@@ -1,22 +1,23 @@
 {
-    "name": "comics-universes",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-      "react": "^16.8.6",
-      "react-dom": "^16.8.6",
-      "react-scripts": "0.9.5"
-    },
-    "devDependencies": {
-      "alasql": "^0.4.11",
-      "chai": "^4.2.0",
-      "console.table": "^0.10.0"
-    },
-    "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "test": "react-scripts test --env=jsdom",
-      "eject": "react-scripts eject"
-    }
+  "name": "comics-universes",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "d3-array": "2.2.0",
+    "d3-scale": "3.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "0.9.5"
+  },
+  "devDependencies": {
+    "alasql": "^0.4.11",
+    "chai": "^4.2.0",
+    "console.table": "^0.10.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
-  
+}
