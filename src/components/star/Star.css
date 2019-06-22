@@ -1,7 +1,18 @@
-.Star{
-    fill: rgb(255, 255, 228);
+.Star-dust{
+    fill: rgb(141, 78, 184);
+}
+.Star-star{
+    fill: rgb(221, 154, 66);
+}
+.Star-planet{
+    fill: rgb(236, 236, 208);
 }
 
 .Sun{
     opacity: 0.8    ;
+}
+
+.Star-Tooltip div{
+    max-width: 400px;
+    margin: 10px;
 }

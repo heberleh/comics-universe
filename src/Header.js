@@ -32,13 +32,14 @@ class Header extends Component{
         return(
             <div className="header d-flex justify-content-center align-self-stretch">
                 <div className=" d-flex justify-content-center align-items-center">
-                    <img src={logo} className="logo" alt="logo" />
+                    {/* <img src={logo} className="logo" alt="logo" /> */}
                     <span>{this.props.title}</span>
                 </div>                
                 <div className="d-flex justify-content-right align-items-center">
                     <span className="author">
+                        by {' '}
                         <a href={this.props.authorUrl}>
-                             {this.props.author} 
+                            {this.props.author} 
                         </a>
                     </span>
                 </div>

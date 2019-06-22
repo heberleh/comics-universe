@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import Galaxy from '../galaxy/Galaxy'
 import LoadDataset from '../../../src/dataset/LoadDataset'
-
+import ReactTooltip from 'react-tooltip'
 import './Universe.css'
+import './../star/Star.css'
 
 class Universe extends Component{
 
@@ -22,10 +23,24 @@ class Universe extends Component{
 
     render(){
         return (
-            <svg id="Universe" width={1700} height={800}>
-                <Galaxy data={this.dcCharacters} comic='dc'  x={400} y={400}/>
-                <Galaxy data={this.marvelCharacters} comic='marvel'  x={1100} y={400}/>
-            </svg>
+            <div>
+                <svg id="Universe" width={1700} height={800}>
+                    <Galaxy data={this.dcCharacters} comic='dc'  x={400} y={400}/>
+                    <Galaxy data={this.marvelCharacters} comic='marvel'  x={1100} y={400}/>
+                </svg>
+
+                <ReactTooltip 
+                        id='characterTooltip'
+                        className='Star-Tooltip'
+                        effect='solid'
+                        delayHide={500}
+                        delayShow={500}
+                        delayUpdate={500}                        
+                        border={true}
+                        type={'light'}
+                        html={true} 
+                        border={true}/>
+            </div>
         )
     }
 

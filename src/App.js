@@ -11,7 +11,7 @@ class App extends Component {
 
   constructor(props){
     super(props);
-    this.title = "D3 & React - Comics Abilities";
+    this.title = "Marvel & DC Characters";
     this.author = "Henry Heberle"
     this.authorUrl = "https://heberleh.github.io"
   }

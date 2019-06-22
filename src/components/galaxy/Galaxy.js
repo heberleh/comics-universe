@@ -23,7 +23,8 @@ class Galaxy extends Component{
     }
 
     _averageWorksN(){
-        return this.data.map(d => d.presentInWorks.length).reduce((a,b)=>a+b,0)/this.data.length
+        let important = this.data.filter(d=>d.presentInWorks.length>2)
+        return important.map(d => d.presentInWorks.length).reduce((a,b)=>a+b,0)/important.length
     }
 
     /**
@@ -32,7 +33,7 @@ class Galaxy extends Component{
      */
     _createBodies(){
         // ? Allow to change this threshold
-        let threshold = 10//this._averageWorksN()
+        let threshold = this._averageWorksN()
 
         let bodies = []
         this.data.forEach((char)=>{
@@ -59,7 +60,7 @@ class Galaxy extends Component{
                 return  (size <= orbit.levels.max && size >= orbit.levels.min)
             });
 
-            return <Orbit maxWorks={maxWorks-25} start={i*10} key={this.props.comic+'_orbit_'+i} bodies={bodies} {...orbit}/>
+            return <Orbit maxWorks={maxWorks} start={i*10} key={this.props.comic+'_orbit_'+i} bodies={bodies} {...orbit}/>
         })
 
     }

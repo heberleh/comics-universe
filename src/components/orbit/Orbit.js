@@ -9,7 +9,9 @@ class Orbit extends Component{
 
     constructor(props){
         super(props)
-        this.bodyScale = scaleLinear().domain([0, props.maxWorks]).range([0, 5]);
+        this.starScale = scaleLinear().domain([0, props.maxWorks]).range([2,8]);
+        this.planetScale = scaleLinear().domain([0, props.maxWorks]).range([2,8]);
+        this.scale = scaleLinear().domain([0, props.maxWorks]).range([0.5,10]);
     }
 
 
@@ -30,14 +32,16 @@ class Orbit extends Component{
         return largeBodies.map((body, i) =>{
             let t = dt*(this.props.start+i);
             // Planet / Start / Dust -> Single component for each?
-            let r = this.bodyScale(body.data.presentInWorks.length)
 
-            if (body.bodyType === "star"){              
-                return <Star key={i} cx={this._x(t)} cy={this._y(t)} r={r} />
-            }
-            if (body.bodyType === "planet"){               
-                return <Star key={i} cx={this._x(t)} cy={this._y(t)} r={r} />
+            if (body.bodyType === "planet"){  
+                let r = this.scale(body.data.presentInWorks.length)             
+                return <Star type="planet" data={body.data} key={i} cx={this._x(t)} cy={this._y(t)} r={r} />
             }           
+
+            if (body.bodyType === "star"){     
+                let r = this.scale(body.data.presentInWorks.length)         
+                return <Star type="star" data={body.data} key={i} cx={this._x(t)} cy={this._y(t)} r={r} />
+            }
         })
     }
 
@@ -51,11 +55,15 @@ class Orbit extends Component{
                 let t = dt*i;
                 let xrandom =  ((Math.random()*15)+5) *(Math.random()<0.5?-1:1)
                 let yrandom =  ((Math.random()*15)+5) *(Math.random()<0.5?-1:1)
+                let r = this.scale(body.data.presentInWorks.length)
+
                 return <Star 
+                        type="dust"
+                        data={body.data}
                         key={i} 
                         cx={this._x(t) + xrandom} 
                         cy={this._y(t) + yrandom} 
-                        r={0.5} />
+                        r={r} />
         })          
     }
 

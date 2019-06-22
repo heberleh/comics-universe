@@ -7,7 +7,8 @@
     "d3-scale": "3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "react-tooltip": "^3.10.0"
   },
   "devDependencies": {
     "alasql": "^0.4.11",
