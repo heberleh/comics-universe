@@ -11,7 +11,9 @@ class Orbit extends Component{
         super(props)
         this.starScale = scaleLinear().domain([0, props.maxWorks]).range([2,8]);
         this.planetScale = scaleLinear().domain([0, props.maxWorks]).range([2,8]);
-        this.scale = scaleLinear().domain([0, props.maxWorks]).range([0.5,10]);
+        this.scale = scaleLinear().domain([0, props.maxWorks]).range([1,10]);
+
+        this.props.bodies.sort((a,b) => (a.data.initials > b.data.initials) ? 1 : ((b.data.initials > a.data.initials) ? -1 : 0))
     }
 
 
@@ -55,7 +57,7 @@ class Orbit extends Component{
                 let t = dt*i;
                 let xrandom =  ((Math.random()*15)+5) *(Math.random()<0.5?-1:1)
                 let yrandom =  ((Math.random()*15)+5) *(Math.random()<0.5?-1:1)
-                let r = this.scale(body.data.presentInWorks.length)
+                let r = 0.5
 
                 return <Star 
                         type="dust"

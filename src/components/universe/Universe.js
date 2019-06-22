@@ -1,14 +1,19 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import Galaxy from '../galaxy/Galaxy'
 import LoadDataset from '../../../src/dataset/LoadDataset'
-import ReactTooltip from 'react-tooltip'
 import './Universe.css'
 import './../star/Star.css'
 
-class Universe extends Component{
+import ReactTooltip from 'react-tooltip'
+import {UncontrolledReactSVGPanZoom} from 'react-svg-pan-zoom';
+import ResponsiveWrapper from '../ResponsiveWrapper'
+
+class Universe extends PureComponent{
 
     constructor(props){
         super(props)
+
+        this.Viewer = null
 
         this.style = require("./Universe.css")
         this.marvelCharacters = LoadDataset.marvelData()
@@ -21,21 +26,56 @@ class Universe extends Component{
         if (this.marvelCharacters === undefined) {throw new Error("ComicsQueries.saveMarvelCharacters() should be executed to save the data")}
     }
 
+    componentDidMount() {
+        this.Viewer.fitToViewer();    
+    }    
+
     render(){
+        console.log("dimensions***", this.props.width, this.props.height)
         return (
-            <div>
-                <svg id="Universe" width={1700} height={800}>
-                    <Galaxy data={this.dcCharacters} comic='dc'  x={400} y={400}/>
-                    <Galaxy data={this.marvelCharacters} comic='marvel'  x={1100} y={400}/>
-                </svg>
+            <div>                        
+                {/* <button className="btn" onClick={() => this.Viewer.zoomOnViewerCenter(1.1)}>Zoom in</button>
+                <button className="btn" onClick={() => this.Viewer.fitSelection(40, 40, 200, 200)}>Zoom area 200x200</button>
+                <button className="btn" onClick={() => this.Viewer.fitToViewer()}>Fit</button>
+
+                <hr/> */}
+
+                <UncontrolledReactSVGPanZoom       
+                        className='Universe-viewer'                 
+                        width={this.props.width} height={this.props.height}
+                        ref={Viewer => this.Viewer = Viewer}
+                        onClick={event => console.log('click', event.x, event.y, event.originalEvent)}
+                        background='black'
+                        SVGBackground='black'
+                        toolbarProps={{SVGAlignX: 'center', SVGAlignY: 'center'}}>            
+                    
+                    <svg className="Universe" width={1700} height={800} styles='background-color:"black"'>
+                        
+                        <defs>
+                            <filter id="glow">
+                                <feFlood flood-color="rgb(255, 255, 255)" flood-opacity="0.9" in="SourceGraphic" />                              
+                                <feComposite operator="in" in2="SourceGraphic" />
+
+                                <feGaussianBlur stdDeviation="0.1" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                               
+                            </filter>
+                        </defs>
+                        <Galaxy data={this.dcCharacters} comic='dc'  x={480} y={400}/>
+                        <Galaxy data={this.marvelCharacters} comic='marvel'  x={1210} y={400}/>
+                    </svg>
+                </UncontrolledReactSVGPanZoom>
 
                 <ReactTooltip 
                         id='characterTooltip'
                         className='Star-Tooltip'
                         effect='solid'
-                        delayHide={500}
-                        delayShow={500}
-                        delayUpdate={500}                        
+                        delayHide={200}
+                        delayShow={200}
+                        delayUpdate={200}                        
                         border={true}
                         type={'light'}
                         html={true} 
@@ -46,4 +86,4 @@ class Universe extends Component{
 
 }
 
-export default Universe
+export default ResponsiveWrapper(Universe)

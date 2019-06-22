@@ -1,6 +1,9 @@
 .App {
   text-align: center;
   background-color: black;
+  height: 100%;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
 }
 
 
@@ -13,11 +16,19 @@
   background-color: rgb(2, 2, 2);
   height: 150px;
   padding: 20px;
-  color: white;
+  color: rgb(166, 133, 197);
 }
 
 .App-intro {
   font-size: large;
+}
+
+.App-universe{
+  height: 100%;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  min-height: 900px;
+  width: 100%;
 }
 
 @keyframes App-logo-spin {

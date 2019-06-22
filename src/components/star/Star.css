@@ -5,7 +5,7 @@
     fill: rgb(221, 154, 66);
 }
 .Star-planet{
-    fill: rgb(236, 236, 208);
+    fill: rgb(168, 168, 135);
 }
 
 .Sun{
@@ -15,4 +15,18 @@
 .Star-Tooltip div{
     max-width: 400px;
     margin: 10px;
+}
+
+.Star-around{
+    opacity:0;
+}
+
+.Star-star.Star-Gender-nonMale,
+.Star-dust.Star-Gender-nonMale,
+.Star-planet.Star-Gender-nonMale{
+    fill: rgb(255, 255, 255) !important;    
+}
+.Star-Glow-Gender-nonMale{
+    fill: rgb(248, 90, 195);
+    opacity: 1;
 }
