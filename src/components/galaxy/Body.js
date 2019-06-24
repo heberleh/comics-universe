@@ -2,12 +2,12 @@ class Body{
 
     constructor(data, threshold){
         this.data = data
-        this._threshold = threshold
+        this._threshold = threshold //size threshold to be considered a planet
 
         this.bodyType = Body.computeBodyType(data.presentInWorks.length, threshold)
         this.x = 0
         this.y = 0
-        this.radius = 5        
+        this.radius = 5   
     }
 
     static computeBodyType(size, threshold){

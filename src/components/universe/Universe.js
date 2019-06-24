@@ -35,14 +35,14 @@ class Universe extends PureComponent{
         let svgWidth = 1600
         let svgHeight = 700
         return (
-            <div>                        
+            <div id='div-universe'>                        
                 {/* <button className="btn" onClick={() => this.Viewer.zoomOnViewerCenter(1.1)}>Zoom in</button>
                 <button className="btn" onClick={() => this.Viewer.fitSelection(40, 40, 200, 200)}>Zoom area 200x200</button>
                 <button className="btn" onClick={() => this.Viewer.fitToViewer()}>Fit</button>
 
                 <hr/> */}
 
-                <UncontrolledReactSVGPanZoom       
+                <UncontrolledReactSVGPanZoom                         
                         className='Universe-viewer'                 
                         width={this.props.width} height={this.props.height}
                         ref={Viewer => this.Viewer = Viewer}
@@ -53,7 +53,7 @@ class Universe extends PureComponent{
                     
                     <svg className="Universe" width={svgWidth} height={svgHeight} styles='background-color:"black"'>
                         
-                        <defs>
+                        {/* <defs>
                             <filter id="glow">
                                 <feFlood flood-color="rgb(255, 255, 255)" flood-opacity="0.9" in="SourceGraphic" />                              
                                 <feComposite operator="in" in2="SourceGraphic" />
@@ -63,11 +63,11 @@ class Universe extends PureComponent{
                                     <feMergeNode in="coloredBlur" />
                                     <feMergeNode in="SourceGraphic" />
                                 </feMerge>
-                               
                             </filter>
-                        </defs>
-                        <Galaxy data={this.dcCharacters} comic='dc'             x={435}  y={365}/>
-                        <Galaxy data={this.marvelCharacters} comic='marvel'     x={1150} y={365}/>
+
+                        </defs> */}
+                        <Galaxy data={this.dcCharacters} comic='dc'             x={435}  y={355}/>
+                        <Galaxy data={this.marvelCharacters} comic='marvel'     x={1150} y={355}/>
                     </svg>
                 </UncontrolledReactSVGPanZoom>
 
@@ -79,7 +79,7 @@ class Universe extends PureComponent{
                         delayShow={200}
                         delayUpdate={200}                        
                         border={true}
-                        type={'light'}
+                        //type={'light'}
                         html={true} 
                         border={true}/>
             </div>

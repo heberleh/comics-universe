@@ -1,15 +1,25 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import './Star.css'
+import Link from '../link/Link'
 
 class Star extends Component{
 
+    constructor(props){
+        super(props)
+        this.state = {showParners: true, showChildren: false, clicked: false}
+
+        this._renderLinks = this._renderLinks.bind(this)
+        this._partnersLinks = this._partnersLinks.bind(this)
+        this._childrenLinks = this._childrenLinks.bind(this)
+    }
+
     _tooltipHtml(){
-        let d = this.props.data
+        let d = this.props.body.data
 
         return (`<div>
                     <div className='row Star-Tooltip-name'>
-                        <a href="${d.id}" target="_blank" title="Click opens a new tab with all details">${d.name}</a>
+                        <a href="${d.url}" target="_blank" title="Click opens a new tab with all details">${d.name}</a>
                     </div>
                     <div className='row Star-Tooltip-summary'>
                         <b>${d.gender}</b> with <b>${d.abilities.length}</b> super abilities and present in <b>${d.presentInWorks.length}</b> works.
@@ -24,30 +34,36 @@ class Star extends Component{
         return data.gender === 'male' || data.gender === undefined ? 'male' : 'nonMale'
     }
 
-    _renderCircle(){
-        let {type, r, data} = this.props
-        if(type === 'planet'){
+    _clickedClass(){
+        return this.state.clicked ? ' Start-clicked ' : ''
+    }
+
+    _renderCircle(){        
+        let body = this.props.body
+
+        if(body.bodyType === 'planet'){
             return <g>
-                        <circle cx={0} 
-                            cy={0} 
-                            r={r*1.1}
-                            className={'Star-Glow-Gender-'+ this._genderClass(data)}
-                            />
-                        <circle 
-                            name={name}                                           
-                            className={'Star-'+type+' Star-Gender-'+ this._genderClass(data)} 
+                        <circle
                             cx={0} 
                             cy={0} 
-                            r={r}                                            
+                            r={body.r*1.1}
+                            className={'Star-Glow-Gender-'+ this._genderClass(body.data) + this._clickedClass()}
+                        />
+                        <circle 
+                            name={name}                                           
+                            className={'Star-'+body.bodyType+' Star-Gender-'+ this._genderClass(body.data)  + this._clickedClass()} 
+                            cx={0} 
+                            cy={0} 
+                            r={body.r}                                            
                         />                
                     </g>
         }else{
-            return <circle 
+            return <circle
                         name={name}                        
-                        className={'Star-'+type+' Star-Gender-'+ this._genderClass(data)} 
+                        className={'Star-'+body.bodyType+' Star-Gender-'+ this._genderClass(body.data)  + this._clickedClass()} 
                         cx={0} 
-                        cy={0} 
-                        r={r}                                            
+                        cy={0}
+                        r={body.r}                                       
                     />
         }
     }
@@ -56,32 +72,64 @@ class Star extends Component{
         return <circle className='Star-around' cx={0} cy={0} r={r>2?r:2}  styles={'opacity:0.0;'} />
     }
 
+    _childrenLinks(){    
+        if (this.state.showChildren === false) return
+        else return this.props.body.data.children.map(child=>{
+            if(child.body === undefined) return
+            else return <Link 
+                        key={this.props.body.data.key + child.body.data.key}
+                        type='child'
+                        sourceBody={this.props.body}
+                        target={child}
+                    />
+        })
+    }
+
+    _partnersLinks(){
+        if (this.state.showParners === false) return
+        else 
+            return this.props.body.data.partners.map(partner=>{
+                        if(partner.body === undefined) return
+                        else {
+                            return <Link 
+                                        key={this.props.body.data.key + partner.body.data.key}
+                                        type='partner'
+                                        sourceBody={this.props.body}
+                                        target={partner.body}
+                                        />
+                        }
+                    })
+    }
+
+    _renderLinks(){
+        return <g>
+                {this._childrenLinks()}
+                {this._partnersLinks()}
+               </g>            
+    }
+
+
     render(){
-        let {type, cx, cy, r, data} = this.props       
-        
-        return <g transform={`translate(${cx},${cy})`}
+        let body = this.props.body     
+        return  <g>
+                <g className='Links'> {this._renderLinks()} </g>
+
+
+                <g transform={`translate(${body.x},${body.y})`}
                         data-tip={this._tooltipHtml()}
                         data-for='characterTooltip'
                         data-html={true}>
 
-                    {this._expandSelectionArea(r)}
+                    {this._expandSelectionArea(body.r)}
 
-                    {this._renderCircle(data, type)}
+                    {this._renderCircle()}
+                </g>
                 </g>
     }
 }
 
 Star.defaultProps = {
-    r: 0.5,
     visible: true
-}
-
-Star.propTypes = {    
-    data: PropTypes.array.isRequired,
-    cx: PropTypes.number.isRequired,
-    cy: PropTypes.number.isRequired,
-    r: PropTypes.number.isRequired,
-    visible: PropTypes.bool
 }
 
 export default Star

@@ -40,6 +40,26 @@ class Galaxy extends Component{
             let body = new Body(char, threshold)
             bodies.push(body)
         })
+
+        bodies.map(body =>{
+            for (let i = 0; i < body.data.children.length; i++){
+                let child = body.data.children[i]                
+                let foundBody = bodies.find(d=>d.data.id === child.id)
+                if (foundBody !== undefined){
+                    child.body = foundBody                                   
+                }else{
+                    child.body = undefined
+                }
+            }
+        })
+
+        bodies.map(body =>{
+            for (let i = 0; i < body.data.partners.length; i++){
+                let partner = body.data.partners[i]
+                partner.body = bodies.find(d=>d.data.id === partner.id) // Body or undefined                
+            }            
+        })
+
         return bodies
     }
 
@@ -60,28 +80,40 @@ class Galaxy extends Component{
                 return  (size <= orbit.levels.max && size >= orbit.levels.min)
             });
 
-            return <Orbit random={i===0?true:false} maxWorks={maxWorks} start={i*10} key={this.props.comic+'_orbit_'+i} bodies={bodies} {...orbit}/>
+            return <Orbit random={false} maxWorks={maxWorks} start={i*10} key={this.props.comic+'_orbit_'+i} bodies={bodies} {...orbit}/>
         })
 
     }
+    
+    componentDidMount(){
+        this.bodies.map(body=>{            
+            if (body.update !== undefined && body.x === 0 && body.y ===0){
+                body.update()
+            }
+        })        
+    }
+
+    // _renderLinks(){
+    //     document.getElementById(`Links-${this.props.comic}`)
+    // }
 
     render(){        
         return (
             <g className='galaxy' transform={'translate('+this.props.x+','+this.props.y+')'}>
+                {/* <g id={`Links-${this.props.comic}`}></g> */}
                 <g transform='translate(-30,-30)'>
                     <Sun galaxyName={this.props.comic} width={60} height={60}/>
                 </g>                
-                {this._renderOrbits()}
+                {this._renderOrbits()}                
             </g>
         )
-
     }
 }
 
 Galaxy.defaultProps = {
     orbits : [ // each line is an orbit
-        {cx:0, cy:0, rx:450, ry: 220, levels:{min:0, max:0}},
-        {cx:0, cy:0, rx:340, ry: 190, levels:{min:1, max:2}},
+        {cx:0, cy:0, rx:420, ry: 235, levels:{min:0, max:0}},
+        {cx:0, cy:0, rx:330, ry: 190, levels:{min:1, max:2}},
         {cx:0, cy:0, rx:250, ry: 160, levels:{min:3, max:4}},
         {cx:0, cy:0, rx:190, ry: 120, levels:{min:5, max:6}},
         {cx:0, cy:0, rx:140, ry: 90, levels:{min:7, max:8}},
@@ -90,7 +122,7 @@ Galaxy.defaultProps = {
 }
 
 Galaxy.propTypes = {
-    comic: PropTypes.string.isRequired,
+    comic: PropTypes.string.isRequired, // used to set the correct Sun
     data: PropTypes.array.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired

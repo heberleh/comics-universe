@@ -1,10 +1,10 @@
+import { timeHour } from "d3-time";
 
 
 class Character{
 
     constructor(id, name=undefined, gender=undefined, birthDate=undefined, abilities=[], partners=[], children=[], presentInWorks=[], occupations=[]){
-        this._id = id
-        
+        this.id = id
         this.name = name
         this.gender = gender
         this.birthDate = birthDate
@@ -16,7 +16,12 @@ class Character{
         this._occupations = occupations
     }
 
-    get id(){return this._id}
+    get key(){
+        let v = this.id.split('/')
+        return v[v.length-1]
+    }
+
+    get url(){return this.id}
 
     get initials(){
         if (this.name){
@@ -53,14 +58,14 @@ class Character{
         }        
     }
 
-    get children(){return this._edges.children}
+    get children(){return this._children}
     addChild(child){
         if (!(child in this._children)){
             this._children.push(child)
         }
     }
 
-    get partners(){return this._edges.partners}
+    get partners(){return this._partners}
     addPartner(partner){
         if(!(partner in this._partners)){
             this._partners.push(partner)

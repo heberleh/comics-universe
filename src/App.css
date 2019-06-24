@@ -28,11 +28,27 @@
   padding: 0 0 0 0;
   margin: 0;
   margin-left: 2%;
-  margin-right: 2%;
+  margin-right: 2%;  
   min-height: 800px;  
 }
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.App-description{
+  text-align: justify;  
+}
+
+.App-description a{
+  color: gray;
+}
+
+.App-description p{
+  color: rgb(93, 93, 93);
+}
+
+.App-description-container{
+  margin-top: 30px;
 }

@@ -32,24 +32,16 @@ class Orbit extends Component{
         let dt = 2*Math.PI/largeBodies.length        
 
         return largeBodies.map((body, i) =>{
-            let t = dt*(this.props.start+i);
-            // Planet / Start / Dust -> Single component for each?
-            let cx = this._x(t)
-            let cy = this._y(t)
+            let t = dt*(this.props.start+i);            
+            body.x = this._x(t)
+            body.y = this._y(t)
             if (random){
-                cx += ((Math.random()*3)) *(Math.random()<0.5?-1:1)
-                cy += ((Math.random()*3)) *(Math.random()<0.5?-1:1)
+                body.x += ((Math.random()*3)) *(Math.random()<0.5?-1:1)
+                body.y += ((Math.random()*3)) *(Math.random()<0.5?-1:1)
             }
+            body.r = this.scale(body.data.presentInWorks.length)
 
-            if (body.bodyType === "planet"){  
-                let r = this.scale(body.data.presentInWorks.length)             
-                return <Star type="planet" data={body.data} key={i} cx={cx} cy={cy} r={r} />
-            }           
-
-            if (body.bodyType === "star"){     
-                let r = this.scale(body.data.presentInWorks.length)         
-                return <Star type="star" data={body.data} key={i} cx={cx} cy={cy} r={r} />
-            }
+            return <Star key={body.data.key} body={body} />
         })
     }
 
@@ -60,27 +52,32 @@ class Orbit extends Component{
         let dt = 2*Math.PI/dust.length
         
         return dust.map((body,i) =>{
+            
                 let t = dt*i;
                 let xrandom =  ((Math.random()*15)+5) *(Math.random()<0.5?-1:1)
                 let yrandom =  ((Math.random()*15)+5) *(Math.random()<0.5?-1:1)
-                let r = 0.5
+                
+                body.x = this._x(t) + xrandom
+                body.y = this._y(t) + yrandom
+                body.r = 0.5
 
-                return <Star 
-                        type="dust"
-                        data={body.data}
-                        key={i} 
-                        cx={this._x(t) + xrandom} 
-                        cy={this._y(t) + yrandom} 
-                        r={r} />
-        })          
+                return <Star  key={body.data.id} body={body} />
+        })
+    }
+
+    _renderEllipse(visible){
+        let {cx, cy, rx, ry} = this.props
+        if (visible){
+            return <ellipse cx={cx} cy={cy} rx={rx} ry={ry}/>
+        }else{
+            return ""
+        }
     }
 
     render(){
-        let {cx, cy, rx, ry} = this.props
-
         return (
             <g className="Orbit">
-                <ellipse cx={cx} cy={cy} rx={rx} ry={ry}/>
+                {this._renderEllipse(!this.props.random)}
                 {this._renderLargeBodies(this.props.random)}
                 {this._renderDust()}
             </g>

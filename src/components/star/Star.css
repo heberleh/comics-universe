@@ -5,7 +5,7 @@
     fill: rgb(221, 154, 66);
 }
 .Star-planet{
-    fill: rgb(168, 168, 135);
+    fill: rgb(96, 107, 107);
 }
 
 .Sun{
@@ -28,5 +28,5 @@
 }
 .Star-Glow-Gender-nonMale{
     fill: rgb(248, 90, 195);
-    opacity: 1;
+    opacity: 1;    
 }

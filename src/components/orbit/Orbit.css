@@ -1,12 +1,12 @@
 .Orbit ellipse{
     fill-opacity: 0;
     stroke-width: 0.5px;
-    stroke-opacity: 0.85;
+    stroke-opacity: 0.5;
     stroke-dasharray: 1;
     stroke: rgb(79, 16, 116);    
 }
 
 .Orbit{
-    transform: rotate(34deg);
+    transform: rotate(37deg);
 }
 

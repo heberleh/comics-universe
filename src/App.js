@@ -41,10 +41,19 @@ class App extends Component {
       <div className="App">
         <Header title={this.title} author={this.author} authorUrl={this.authorUrl}/>
        
-       <div className="App-universe d-flex justify-content-center">
-          <Universe />
+       <div className="App-universe d-flex justify-content-center">          
+          <Universe />                   
        </div>
+
        
+       <div className='App-description-container container'>
+
+        <div className="row  App-description">
+          <p>Marvel and DC galaxies were created with Wikipedia data extracted in Jun 2019. If you are a comic expert, consider using the visualization to identify gaps in the data and contribute to <a href="https://en.wikipedia.org/wiki/Wikipedia:Contributing_to_Wikipedia" target="_blank">Wikipedia</a> and <a href="https://www.wikidata.org/wiki/Wikidata:Contribute" target="_blank">Wikidata</a>.</p>
+        </div>
+
+       </div>
+              
       </div>
     );
   }
