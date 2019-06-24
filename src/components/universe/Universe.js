@@ -32,6 +32,8 @@ class Universe extends PureComponent{
 
     render(){
         console.log("dimensions***", this.props.width, this.props.height)
+        let svgWidth = 1600
+        let svgHeight = 700
         return (
             <div>                        
                 {/* <button className="btn" onClick={() => this.Viewer.zoomOnViewerCenter(1.1)}>Zoom in</button>
@@ -49,7 +51,7 @@ class Universe extends PureComponent{
                         SVGBackground='black'
                         toolbarProps={{SVGAlignX: 'center', SVGAlignY: 'center'}}>            
                     
-                    <svg className="Universe" width={1700} height={800} styles='background-color:"black"'>
+                    <svg className="Universe" width={svgWidth} height={svgHeight} styles='background-color:"black"'>
                         
                         <defs>
                             <filter id="glow">
@@ -64,8 +66,8 @@ class Universe extends PureComponent{
                                
                             </filter>
                         </defs>
-                        <Galaxy data={this.dcCharacters} comic='dc'  x={480} y={400}/>
-                        <Galaxy data={this.marvelCharacters} comic='marvel'  x={1210} y={400}/>
+                        <Galaxy data={this.dcCharacters} comic='dc'             x={435}  y={365}/>
+                        <Galaxy data={this.marvelCharacters} comic='marvel'     x={1150} y={365}/>
                     </svg>
                 </UncontrolledReactSVGPanZoom>
 

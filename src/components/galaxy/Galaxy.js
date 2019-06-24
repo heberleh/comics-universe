@@ -60,7 +60,7 @@ class Galaxy extends Component{
                 return  (size <= orbit.levels.max && size >= orbit.levels.min)
             });
 
-            return <Orbit maxWorks={maxWorks} start={i*10} key={this.props.comic+'_orbit_'+i} bodies={bodies} {...orbit}/>
+            return <Orbit random={i===0?true:false} maxWorks={maxWorks} start={i*10} key={this.props.comic+'_orbit_'+i} bodies={bodies} {...orbit}/>
         })
 
     }

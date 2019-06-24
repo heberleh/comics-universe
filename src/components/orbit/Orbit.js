@@ -25,7 +25,7 @@ class Orbit extends Component{
         return this.props.ry * Math.sin(t)
     }
 
-    _renderLargeBodies(){
+    _renderLargeBodies(random){
 
         let largeBodies = this.props.bodies.filter((body)=>!(body.bodyType==='dust'))
 
@@ -34,15 +34,21 @@ class Orbit extends Component{
         return largeBodies.map((body, i) =>{
             let t = dt*(this.props.start+i);
             // Planet / Start / Dust -> Single component for each?
+            let cx = this._x(t)
+            let cy = this._y(t)
+            if (random){
+                cx += ((Math.random()*3)) *(Math.random()<0.5?-1:1)
+                cy += ((Math.random()*3)) *(Math.random()<0.5?-1:1)
+            }
 
             if (body.bodyType === "planet"){  
                 let r = this.scale(body.data.presentInWorks.length)             
-                return <Star type="planet" data={body.data} key={i} cx={this._x(t)} cy={this._y(t)} r={r} />
+                return <Star type="planet" data={body.data} key={i} cx={cx} cy={cy} r={r} />
             }           
 
             if (body.bodyType === "star"){     
                 let r = this.scale(body.data.presentInWorks.length)         
-                return <Star type="star" data={body.data} key={i} cx={this._x(t)} cy={this._y(t)} r={r} />
+                return <Star type="star" data={body.data} key={i} cx={cx} cy={cy} r={r} />
             }
         })
     }
@@ -75,7 +81,7 @@ class Orbit extends Component{
         return (
             <g className="Orbit">
                 <ellipse cx={cx} cy={cy} rx={rx} ry={ry}/>
-                {this._renderLargeBodies()}
+                {this._renderLargeBodies(this.props.random)}
                 {this._renderDust()}
             </g>
         )
@@ -83,9 +89,11 @@ class Orbit extends Component{
 }
 
 Orbit.defaultProps = {
+    random: false, // semi-radomize large bodies x,y
 }
 
 Orbit.propTypes = {
+    random: PropTypes.bool
 }
 
 export default Orbit
