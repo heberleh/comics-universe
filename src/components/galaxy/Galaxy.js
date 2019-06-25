@@ -6,6 +6,8 @@ import Body from './Body'
 import Orbit from '../orbit/Orbit'
 import {max as d3max} from 'd3-array'
 import {scaleLinear} from 'd3-scale'
+import ReactTooltip from 'react-tooltip'
+import ReactDOM from 'react-dom'
 
 
 class Galaxy extends Component{
@@ -121,19 +123,33 @@ class Galaxy extends Component{
                 let size = body.data.abilities.length
                 return  (size <= orbit.levels.max && size >= orbit.levels.min)
             });
-            return <Orbit key={this.props.comic+'_orbit_'+i} bodies={orbitBodies} {...orbit}/>
+            return <Orbit key={this.props.comic+'_orbit_'+i} comic={this.props.comic} bodies={orbitBodies} {...orbit}/>
         })
     }
 
+    _renderGalaxy(){
+        return <g className='galaxy' transform={'translate('+this.props.x+','+this.props.y+')'}>               
+                    <g transform='translate(-30,-30)'>
+                        <Sun galaxyName={this.props.comic} width={60} height={60}/>
+                    </g>
+                    {this._renderOrbits(this.state.bodies)}
+                    {ReactDOM.createPortal(<ReactTooltip 
+                        key="Universe-Node-Tooltip"
+                        id={`characterTooltip${this.props.comic}`}
+                        className='Star-Tooltip'
+                        effect='solid'
+                        delayHide={200}
+                        delayShow={200}
+                        delayUpdate={200}                        
+                        border={true}
+                        html={true}/>,       document.getElementById("tooltips"))}
+                    
+                        
+                </g>
+    }
+
     render(){
-        return (
-            <g className='galaxy' transform={'translate('+this.props.x+','+this.props.y+')'}>               
-                <g transform='translate(-30,-30)'>
-                    <Sun galaxyName={this.props.comic} width={60} height={60}/>
-                </g>                
-                {this.state && this.state.bodies && this._renderOrbits(this.state.bodies)}               
-            </g>
-        )
+        return this.state && this.state.bodies && this._renderGalaxy()
     }
 }
 

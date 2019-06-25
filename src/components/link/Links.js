@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import Link from './Link'
-class Links extends Component{
 
-    _childrenLinks(){
+class Links extends Component{
+    _childrenLinks(){    
         if (this.state.showChildren === false) return
         else return this.props.body.data.children.map(child=>{
-            if(child.body === undefined) return
+            if(child.body === undefined) return ''
             else return <Link 
                         key={this.props.body.data.key + child.body.data.key}
                         type='child'
@@ -16,10 +16,10 @@ class Links extends Component{
     }
 
     _partnersLinks(){
-        if (this.state.showParners === false) return
+        if (this.state.showPartners === false) return
         else 
             return this.props.body.data.partners.map(partner=>{
-                        if(partner.body === undefined) return
+                        if(partner.body === undefined) return ''
                         else {
                             return <Link 
                                         key={this.props.body.data.key + partner.body.data.key}
@@ -29,6 +29,13 @@ class Links extends Component{
                                         />
                         }
                     })
+    }
+
+    _renderLinks(){
+        return <g>
+                {this._childrenLinks()}
+                {this._partnersLinks()}
+               </g>
     }
 
     _renderLinks(){

@@ -4,10 +4,14 @@ import LoadDataset from '../../../src/dataset/LoadDataset'
 import './Universe.css'
 import './../star/Star.css'
 
-import ReactTooltip from 'react-tooltip'
 import {UncontrolledReactSVGPanZoom} from 'react-svg-pan-zoom';
 import ResponsiveWrapper from '../ResponsiveWrapper'
 
+
+function Tooltips(props){
+    return <div id="tooltips"></div>
+  }
+  
 class Universe extends PureComponent{
 
     constructor(props){
@@ -15,7 +19,6 @@ class Universe extends PureComponent{
 
         this.Viewer = null
 
-        this.style = require("./Universe.css")
         this.marvelCharacters = LoadDataset.marvelData()
         this.dcCharacters = LoadDataset.dcData()
 
@@ -42,7 +45,8 @@ class Universe extends PureComponent{
 
                 <hr/> */}
 
-                <UncontrolledReactSVGPanZoom                         
+                <UncontrolledReactSVGPanZoom
+                        key="Universe-View"                  
                         className='Universe-viewer'                 
                         width={this.props.width} height={this.props.height}
                         ref={Viewer => this.Viewer = Viewer}
@@ -52,35 +56,12 @@ class Universe extends PureComponent{
                         toolbarProps={{SVGAlignX: 'center', SVGAlignY: 'center'}}>            
                     
                     <svg className="Universe" width={svgWidth} height={svgHeight} styles='background-color:"black"'>
-                        
-                        {/* <defs>
-                            <filter id="glow">
-                                <feFlood flood-color="rgb(255, 255, 255)" flood-opacity="0.9" in="SourceGraphic" />                              
-                                <feComposite operator="in" in2="SourceGraphic" />
-
-                                <feGaussianBlur stdDeviation="0.1" result="coloredBlur"/>
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-
-                        </defs> */}
-                        <Galaxy key={'dc'} data={this.dcCharacters} comic='dc'             x={435}  y={355}/>
-                        <Galaxy key={'marvel'} data={this.marvelCharacters} comic='marvel' x={1150} y={355}/>
+                        <Galaxy key={'dc-galaxy'} data={this.dcCharacters} comic='dc'             x={435}  y={355}/>
+                        <Galaxy key={'marvel-galaxy'} data={this.marvelCharacters} comic='marvel' x={1150} y={355}/>
                     </svg>
                 </UncontrolledReactSVGPanZoom>
 
-                <ReactTooltip 
-                        id='characterTooltip'
-                        className='Star-Tooltip'
-                        effect='solid'
-                        delayHide={200}
-                        delayShow={200}
-                        delayUpdate={200}                        
-                        border={true}
-                        //type={'light'}
-                        html={true}/>
+                <Tooltips />
             </div>
         )
     }

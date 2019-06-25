@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types';
 import './Orbit.css'
 import Star from '../star/Star'
 
@@ -14,19 +13,20 @@ class Orbit extends Component{
     _renderLargeBodies(){
         let largeBodies = this.props.bodies.filter(body=>body.bodyType!=='dust')
         return largeBodies.map((body, i) => {
-            return <Star key={body.data.key} body={body} {...body}/>
+            return <Star key={body.data.key} comic={this.props.comic} body={body} />
         })
     }
 
     _renderDust(){ 
         let dust = this.props.bodies.filter(body=>body.bodyType==='dust')
         return dust.map((body,i) => {
-                return <Star key={body.data.id} body={body} {...body}/>
+                return <Star key={body.data.key} comic={this.props.comic} body={body} />
         })
     }
 
     _renderEllipse(){
         let {cx, cy, rx, ry} = this.props
+    
         return <ellipse cx={cx} cy={cy} rx={rx} ry={ry}/>
     }
 
@@ -39,14 +39,6 @@ class Orbit extends Component{
             </g>
         )
     }
-}
-
-Orbit.defaultProps = {
-    random: false, // semi-radomize large bodies x,y
-}
-
-Orbit.propTypes = {
-    random: PropTypes.bool
 }
 
 export default Orbit
