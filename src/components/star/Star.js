@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import PropTypes from 'prop-types';
 import './Star.css'
 import Link from '../link/Link'
 
@@ -7,7 +6,7 @@ class Star extends PureComponent{
 
     constructor(props){
         super(props)
-        this.state = this.props.body
+        this.state = {showChildren: false, showParners:true, clicked: false}
 
         this._renderLinks = this._renderLinks.bind(this)
         this._partnersLinks = this._partnersLinks.bind(this)
@@ -26,7 +25,7 @@ class Star extends PureComponent{
                     </div>
                     <div className='row Star-Tooltip-abilities'>
                         <div>${d.abilities.join(', ')}</div>
-                    </div>                  
+                    </div>
                 </div>`)
     }
 
@@ -49,8 +48,7 @@ class Star extends PureComponent{
                             r={body.r*1.1}
                             className={'Star-Glow-Gender-'+ this._genderClass(body.data) + this._clickedClass()}
                         />
-                        <circle 
-                            name={name}                                           
+                        <circle                                        
                             className={'Star-'+body.bodyType+' Star-Gender-'+ this._genderClass(body.data)  + this._clickedClass()} 
                             cx={0} 
                             cy={0} 
@@ -58,8 +56,7 @@ class Star extends PureComponent{
                         />                
                     </g>
         }else{
-            return <circle
-                        name={name}                        
+            return <circle                       
                         className={'Star-'+body.bodyType+' Star-Gender-'+ this._genderClass(body.data)  + this._clickedClass()} 
                         cx={0} 
                         cy={0}
@@ -75,7 +72,7 @@ class Star extends PureComponent{
     _childrenLinks(){    
         if (this.state.showChildren === false) return
         else return this.props.body.data.children.map(child=>{
-            if(child.body === undefined) return
+            if(child.body === undefined) return ''
             else return <Link 
                         key={this.props.body.data.key + child.body.data.key}
                         type='child'
@@ -89,7 +86,7 @@ class Star extends PureComponent{
         if (this.state.showParners === false) return
         else 
             return this.props.body.data.partners.map(partner=>{
-                        if(partner.body === undefined) return
+                        if(partner.body === undefined) return ''
                         else {
                             return <Link 
                                         key={this.props.body.data.key + partner.body.data.key}
@@ -113,18 +110,18 @@ class Star extends PureComponent{
         let {x, y, r} = this.props.body     
 
         return  <g>
-                <g className='Links'> {this._renderLinks()} </g>
+                    <g className='Links'>
+                        {this._renderLinks()} 
+                    </g>
+                    <g transform={`translate(${x},${y})`}
+                            data-tip={this._tooltipHtml()}
+                            data-for='characterTooltip'
+                            data-html={true}>
 
-                
-                <g transform={`translate(${x},${y})`}
-                        data-tip={this._tooltipHtml()}
-                        data-for='characterTooltip'
-                        data-html={true}>
+                        {this._expandSelectionArea(r)}
 
-                    {this._expandSelectionArea(r)}
-
-                    {this._renderCircle()}
-                </g>
+                        {this._renderCircle()}
+                    </g>
                 </g>
     }
 }

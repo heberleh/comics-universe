@@ -4,12 +4,6 @@ import React, {Component} from 'react'
 import './Link.css'
 
 export default class Link extends Component{
-    constructor(props){
-        super(props)
-        props.sourceBody.data[props.type]
-    }
-
-
     render(){
         let {type, sourceBody, target} = this.props
         return <line 

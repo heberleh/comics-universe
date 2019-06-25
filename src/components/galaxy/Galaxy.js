@@ -6,7 +6,6 @@ import Body from './Body'
 import Orbit from '../orbit/Orbit'
 import {max as d3max} from 'd3-array'
 import {scaleLinear} from 'd3-scale'
-//import Link from '../link/Links'
 
 
 class Galaxy extends Component{
@@ -18,13 +17,12 @@ class Galaxy extends Component{
 
         this.galaxyName = props.comic
         this.data = props.data  
-        this.orbits = props.orbits      
-        this.state = {orbits: props.orbits} // !Check: if orbits map changes, re-render accordingly
+        this.orbits = props.orbits
+    }
 
-        this.bodies = this._createBodies()
-
-        this._renderOrbits()
-        
+    componentDidMount() {
+        console.log("Galaxy Component did mount.")
+        this.setState({bodies: this._createBodies()})
     }
 
     _averageWorksN(){
@@ -46,22 +44,30 @@ class Galaxy extends Component{
             bodies.push(body)
         })
 
+        this._computeOrbitsBodies(bodies)
+
         bodies.map(body =>{
             for (let i = 0; i < body.data.children.length; i++){
                 let child = body.data.children[i]                
                 child.body = bodies.find(d=>d.data.id === child.id)
             }
+            return body
         })
 
         bodies.map(body =>{
             for (let i = 0; i < body.data.partners.length; i++){
                 let partner = body.data.partners[i]
-                partner.body = bodies.find(d=>d.data.id === partner.id) // Body or undefined                
-            }            
+                partner.body = bodies.find(d=>d.data.id === partner.id)
+            }    
+            return body        
         })
-
+        
         return bodies
     }
+
+    x(rx, t){return rx * Math.cos(t)}
+    y(ry, t){return ry * Math.sin(t)}
+
 
     /**
      * Set Body.x and Body.y in an Orbit
@@ -69,61 +75,63 @@ class Galaxy extends Component{
      * @param {numeric} randomR how x,y will randomly vary
      * @param {function} r d3-scale function
      */
-    _setUpOrbitBodies(rx, ry, randomR, bodies, r, start=1){
+    _setUpOrbitBodies(rx, ry, randomR, bodies, r, start=1, allbodies){
         if (r === undefined){
-            let maxWorks = d3max(this.bodies, d=>d.data.presentInWorks.length)            
+            let maxWorks = d3max(allbodies, d=>d.data.presentInWorks.length);           
             r = scaleLinear().domain([0, maxWorks]).range([1,10]);    
         }
 
-        x = (rx, t) => rx * Math.cos(t)
-        y = (ry, t) => ry * Math.sin(t)
+        let dt = 2*Math.PI/bodies.length; 
 
-        let dt = 2*Math.PI/bodies.length   
-
-        bodies.map((body, i) =>{            
+        bodies.map((body, i) => {
             let t = dt*(start+i);
             if (randomR === undefined){
-                body.x = x(t)
-                body.y = y(t)       
+                body.x = this.x(rx, t);
+                body.y = this.y(ry, t);       
             }else{
-                body.x = x(t) + ((Math.random()*randomR)+5) *(Math.random()<0.5?-1:1)            
-                body.y = y(t) + ((Math.random()*randomR)+5) *(Math.random()<0.5?-1:1)
+                body.x = this.x(rx, t) + ((Math.random()*randomR)+5) *(Math.random()<0.5?-1:1);          
+                body.y = this.y(ry, t) + ((Math.random()*randomR)+5) *(Math.random()<0.5?-1:1);
             }
-            body.r = r(body.data.presentInWorks.length)
+            body.r = r(body.data.presentInWorks.length);
+            return body
         })
     }
 
-    _computeOrbitsBodies(){
+    _computeOrbitsBodies(bodies){
         this.orbits.map((orbit, i) =>{
 
-            orbit.bodies = this.bodies.filter(body => {
+            let orbitBodies = bodies.filter(body => {
                 let size = body.data.abilities.length
                 return  (size <= orbit.levels.max && size >= orbit.levels.min)
             });
             
             // placement of planets and starts
-            this._computeOrbit(orbit.rx, orbit.ry, undefined, orbit.bodies.filter(body => body.bodyType !== 'dust'), undefined, i*10)
+            this._setUpOrbitBodies(orbit.rx, orbit.ry, undefined, orbitBodies.filter(body => body.bodyType !== 'dust'), undefined, i*10, bodies);
             
             // placement of dust
-            this._computeOrbit(orbit.rx, orbit.ry, 15, orbit.bodies.filter(body => body.bodyType === 'dust'), (d)=>0.5, i*10)
+            this._setUpOrbitBodies(orbit.rx, orbit.ry, 15, orbitBodies.filter(body => body.bodyType === 'dust'), (d)=>0.5, i*10, bodies);
+
+            return orbit
         })
     }
 
-    _renderOrbits(){        
+    _renderOrbits(bodies){                
         return this.orbits.map((orbit, i) =>{
-            return <Orbit key={this.props.comic+'_orbit_'+i} {...orbit}/>
+            let orbitBodies = bodies.filter(body => {
+                let size = body.data.abilities.length
+                return  (size <= orbit.levels.max && size >= orbit.levels.min)
+            });
+            return <Orbit key={this.props.comic+'_orbit_'+i} bodies={orbitBodies} {...orbit}/>
         })
     }
 
     render(){
         return (
-            <g className='galaxy' transform={'translate('+this.props.x+','+this.props.y+')'}>
-                {/*     <g id={`Links-${this.props.comic}`}></g> */}
+            <g className='galaxy' transform={'translate('+this.props.x+','+this.props.y+')'}>               
                 <g transform='translate(-30,-30)'>
                     <Sun galaxyName={this.props.comic} width={60} height={60}/>
                 </g>                
-                {this._renderOrbits()}  
-                {/* {this._renderLinks()}               */}
+                {this.state && this.state.bodies && this._renderOrbits(this.state.bodies)}               
             </g>
         )
     }
@@ -146,7 +154,5 @@ Galaxy.propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired
 }
-
-
 
 export default Galaxy

@@ -66,8 +66,8 @@ class Universe extends PureComponent{
                             </filter>
 
                         </defs> */}
-                        <Galaxy data={this.dcCharacters} comic='dc'             x={435}  y={355}/>
-                        <Galaxy data={this.marvelCharacters} comic='marvel'     x={1150} y={355}/>
+                        <Galaxy key={'dc'} data={this.dcCharacters} comic='dc'             x={435}  y={355}/>
+                        <Galaxy key={'marvel'} data={this.marvelCharacters} comic='marvel' x={1150} y={355}/>
                     </svg>
                 </UncontrolledReactSVGPanZoom>
 
@@ -80,8 +80,7 @@ class Universe extends PureComponent{
                         delayUpdate={200}                        
                         border={true}
                         //type={'light'}
-                        html={true} 
-                        border={true}/>
+                        html={true}/>
             </div>
         )
     }
