@@ -5,6 +5,8 @@ import Character from '../../dataset/Character'
 import Body from './Body'
 import Orbit from '../orbit/Orbit'
 import {max as d3max} from 'd3-array'
+import {scaleLinear} from 'd3-scale'
+//import Link from '../link/Links'
 
 
 class Galaxy extends Component{
@@ -20,6 +22,9 @@ class Galaxy extends Component{
         this.state = {orbits: props.orbits} // !Check: if orbits map changes, re-render accordingly
 
         this.bodies = this._createBodies()
+
+        this._renderOrbits()
+        
     }
 
     _averageWorksN(){
@@ -44,12 +49,7 @@ class Galaxy extends Component{
         bodies.map(body =>{
             for (let i = 0; i < body.data.children.length; i++){
                 let child = body.data.children[i]                
-                let foundBody = bodies.find(d=>d.data.id === child.id)
-                if (foundBody !== undefined){
-                    child.body = foundBody                                   
-                }else{
-                    child.body = undefined
-                }
+                child.body = bodies.find(d=>d.data.id === child.id)
             }
         })
 
@@ -63,48 +63,67 @@ class Galaxy extends Component{
         return bodies
     }
 
-    _placement(bodies){
-        // compute x.y for each body
+    /**
+     * Set Body.x and Body.y in an Orbit
+     * @param {array} bodies array of Body
+     * @param {numeric} randomR how x,y will randomly vary
+     * @param {function} r d3-scale function
+     */
+    _setUpOrbitBodies(rx, ry, randomR, bodies, r, start=1){
+        if (r === undefined){
+            let maxWorks = d3max(this.bodies, d=>d.data.presentInWorks.length)            
+            r = scaleLinear().domain([0, maxWorks]).range([1,10]);    
+        }
+
+        x = (rx, t) => rx * Math.cos(t)
+        y = (ry, t) => ry * Math.sin(t)
+
+        let dt = 2*Math.PI/bodies.length   
+
+        bodies.map((body, i) =>{            
+            let t = dt*(start+i);
+            if (randomR === undefined){
+                body.x = x(t)
+                body.y = y(t)       
+            }else{
+                body.x = x(t) + ((Math.random()*randomR)+5) *(Math.random()<0.5?-1:1)            
+                body.y = y(t) + ((Math.random()*randomR)+5) *(Math.random()<0.5?-1:1)
+            }
+            body.r = r(body.data.presentInWorks.length)
+        })
     }
 
-    _renderOrbits(){
-        // based on Body data, with updated location
-        // return the <Planet> <Star> <Dust> components
+    _computeOrbitsBodies(){
+        this.orbits.map((orbit, i) =>{
 
-        let maxWorks = d3max(this.bodies, d=>d.data.presentInWorks.length)        
-
-        return this.orbits.map((orbit, i) =>{
-
-            let bodies = this.bodies.filter(body => {
+            orbit.bodies = this.bodies.filter(body => {
                 let size = body.data.abilities.length
                 return  (size <= orbit.levels.max && size >= orbit.levels.min)
             });
-
-            return <Orbit random={false} maxWorks={maxWorks} start={i*10} key={this.props.comic+'_orbit_'+i} bodies={bodies} {...orbit}/>
+            
+            // placement of planets and starts
+            this._computeOrbit(orbit.rx, orbit.ry, undefined, orbit.bodies.filter(body => body.bodyType !== 'dust'), undefined, i*10)
+            
+            // placement of dust
+            this._computeOrbit(orbit.rx, orbit.ry, 15, orbit.bodies.filter(body => body.bodyType === 'dust'), (d)=>0.5, i*10)
         })
-
-    }
-    
-    componentDidMount(){
-        this.bodies.map(body=>{            
-            if (body.update !== undefined && body.x === 0 && body.y ===0){
-                body.update()
-            }
-        })        
     }
 
-    // _renderLinks(){
-    //     document.getElementById(`Links-${this.props.comic}`)
-    // }
+    _renderOrbits(){        
+        return this.orbits.map((orbit, i) =>{
+            return <Orbit key={this.props.comic+'_orbit_'+i} {...orbit}/>
+        })
+    }
 
-    render(){        
+    render(){
         return (
             <g className='galaxy' transform={'translate('+this.props.x+','+this.props.y+')'}>
-                {/* <g id={`Links-${this.props.comic}`}></g> */}
+                {/*     <g id={`Links-${this.props.comic}`}></g> */}
                 <g transform='translate(-30,-30)'>
                     <Sun galaxyName={this.props.comic} width={60} height={60}/>
                 </g>                
-                {this._renderOrbits()}                
+                {this._renderOrbits()}  
+                {/* {this._renderLinks()}               */}
             </g>
         )
     }

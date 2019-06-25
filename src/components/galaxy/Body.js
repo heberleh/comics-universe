@@ -7,7 +7,7 @@ class Body{
         this.bodyType = Body.computeBodyType(data.presentInWorks.length, threshold)
         this.x = 0
         this.y = 0
-        this.radius = 5   
+        this.radius = 5
     }
 
     static computeBodyType(size, threshold){

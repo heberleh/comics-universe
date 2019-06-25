@@ -1,13 +1,13 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types';
 import './Star.css'
 import Link from '../link/Link'
 
-class Star extends Component{
+class Star extends PureComponent{
 
     constructor(props){
         super(props)
-        this.state = {showParners: true, showChildren: false, clicked: false}
+        this.state = this.props.body
 
         this._renderLinks = this._renderLinks.bind(this)
         this._partnersLinks = this._partnersLinks.bind(this)
@@ -110,17 +110,18 @@ class Star extends Component{
 
 
     render(){
-        let body = this.props.body     
+        let {x, y, r} = this.props.body     
+
         return  <g>
                 <g className='Links'> {this._renderLinks()} </g>
 
-
-                <g transform={`translate(${body.x},${body.y})`}
+                
+                <g transform={`translate(${x},${y})`}
                         data-tip={this._tooltipHtml()}
                         data-for='characterTooltip'
                         data-html={true}>
 
-                    {this._expandSelectionArea(body.r)}
+                    {this._expandSelectionArea(r)}
 
                     {this._renderCircle()}
                 </g>
