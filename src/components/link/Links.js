@@ -1,45 +1,44 @@
 import React, {Component} from 'react'
 import Link from './Link'
+import './Links.css'
 
 class Links extends Component{
-    _childrenLinks(){    
-        if (this.state.showChildren === false) return
-        else return this.props.body.data.children.map(child=>{
-            if(child.body === undefined) return ''
-            else return <Link 
-                        key={this.props.body.data.key + child.body.data.key}
-                        type='child'
-                        sourceBody={this.props.body}
-                        target={child}
+
+    _childrenLinks(bodies){    
+        return this.props.bodies.map(body => {
+            return body.data.children.map(child=>{
+                return this._Link(body, 
+                                child.body, 
+                                'child',
+                                this.props.children ? 'visible':'hidden')
+            })
+        })            
+    }
+
+    _partnersLinks(){    
+        return this.props.bodies.map(body => {
+            return body.data.partners.map(partner=>{
+                return this._Link(body, 
+                                partner.body, 
+                                'partner', 
+                                this.props.showPartners?'visible':'hidden')
+            })
+        })                   
+    }
+
+    _Link(source, target, type, vis){
+            if (target === undefined) return ''
+        	return <Link 
+                        key={source.data.key + target.data.key}
+                        type={type}
+                        source={source}
+                        target={target}
+                        vis={vis}
                     />
-        })
-    }
-
-    _partnersLinks(){
-        if (this.state.showPartners === false) return
-        else 
-            return this.props.body.data.partners.map(partner=>{
-                        if(partner.body === undefined) return ''
-                        else {
-                            return <Link 
-                                        key={this.props.body.data.key + partner.body.data.key}
-                                        type='partner'
-                                        sourceBody={this.props.body}
-                                        target={partner.body}
-                                        />
-                        }
-                    })
     }
 
     _renderLinks(){
-        return <g>
-                {this._childrenLinks()}
-                {this._partnersLinks()}
-               </g>
-    }
-
-    _renderLinks(){
-        return <g>
+        return <g className={`Links Links-Galaxy-${this.props.comic}`}>
                 {this._childrenLinks()}
                 {this._partnersLinks()}
                </g>            

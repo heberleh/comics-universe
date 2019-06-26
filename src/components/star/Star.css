@@ -19,7 +19,7 @@
 .Star-star.Star-Gender-nonMale,
 .Star-dust.Star-Gender-nonMale,
 .Star-planet.Star-Gender-nonMale{
-    fill: rgb(255, 255, 255) !important;    
+    fill: rgb(255, 255, 255);    
 }
 .Star-Glow-Gender-nonMale{
     fill: rgb(248, 90, 195);

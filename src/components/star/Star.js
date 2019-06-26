@@ -1,11 +1,13 @@
 import React, {PureComponent} from 'react'
 import './Star.css'
+import {select as d3Select, selectAll as d3SelectAll} from 'd3-selection'
 
 class Star extends PureComponent{
 
     constructor(props){
         super(props)
-        this.state = {showChildren: false, showPartners:true, clicked: false}
+        this.state = {selected: false}
+        this.handleClick = this.handleClick.bind(this)
     }
 
     _tooltipHtml(){
@@ -27,8 +29,29 @@ class Star extends PureComponent{
         return data.gender === 'male' || data.gender === undefined ? 'male' : 'nonMale'
     }
 
-    _clickedClass(){
-        return this.state.clicked ? ' Start-clicked ' : ''
+    _selectedClass(){
+        return this.state.selected ? ' selected ' : ''
+    }
+
+    _bodyStyle(){
+        if(this.state.selected){            
+            return {strokeWidth: this.props.body.r*0.3,
+                    stroke: 'yellow',
+                    fill: 'purple'}
+        }else{
+            return {}
+        }
+    }
+
+    _renderBody(){
+        let body = this.props.body
+        return <circle                                        
+            className={'Star-'+body.bodyType+' Star-Gender-'+ this._genderClass(body.data)  + this._selectedClass()} 
+            cx={0} 
+            cy={0} 
+            r={body.r}   
+            style={this._bodyStyle()}
+        /> 
     }
 
     _renderCircle(){        
@@ -40,27 +63,44 @@ class Star extends PureComponent{
                             cx={0} 
                             cy={0} 
                             r={body.r*1.1}
-                            className={'Star-Glow-Gender-'+ this._genderClass(body.data) + this._clickedClass()}
+                            className={'Star-Glow-Gender-'+ this._genderClass(body.data)}
                         />
-                        <circle                                        
-                            className={'Star-'+body.bodyType+' Star-Gender-'+ this._genderClass(body.data)  + this._clickedClass()} 
-                            cx={0} 
-                            cy={0} 
-                            r={body.r}                                            
-                        />                
+                        {this._renderBody(body)}
                     </g>
         }else{
-            return <circle                       
-                        className={'Star-'+body.bodyType+' Star-Gender-'+ this._genderClass(body.data)  + this._clickedClass()} 
-                        cx={0} 
-                        cy={0}
-                        r={body.r}                                       
-                    />
+            return this._renderBody(body)
         }
     }
 
     _expandSelectionArea(r){
         return <circle className='Star-around' cx={0} cy={0} r={r>2?r:2}  styles={'opacity:0.0;'} />
+    }
+
+    _showLabel(body){
+        d3Select("#"+body.data.key)
+            .select('text')
+            .attr('visibility', this.state.selected ? 'visible' : 'hidden')
+    }
+
+    _highlightNeighbors(){
+        let partners = this.props.body.data.partners
+        let children = this.props.body.data.children
+        partners.forEach(partner =>{            
+            partner.body && d3Select("#"+this.props.body.data.key+"_"+partner.body.data.key)
+                                .attr('visibility', this.state.selected ? 'visible' : 'hidden')
+        })
+
+        children.forEach(child =>{            
+            child.body && d3Select("#"+this.props.body.data.key+"_"+child.body.data.key)
+                                .attr('visibility', this.state.selected ? 'visible' : 'hidden')
+        })
+    }
+
+    handleClick() {
+
+        this.setState(state => ({
+          selected: !state.selected
+        }));        
     }
 
     render(){
@@ -69,11 +109,14 @@ class Star extends PureComponent{
         return <g transform={`translate(${x},${y})`}
                         data-tip={this._tooltipHtml()}
                         data-for={`characterTooltip${this.props.comic}`}
-                        data-html={true}>
+                        data-html={true}
+                        onClick={this.handleClick}
+                        >
 
                     {this._expandSelectionArea(r)}
 
                     {this._renderCircle()}
+                    {this._highlightNeighbors()}
                 </g>
     }
 }

@@ -8,6 +8,7 @@ import {max as d3max} from 'd3-array'
 import {scaleLinear} from 'd3-scale'
 import ReactTooltip from 'react-tooltip'
 import ReactDOM from 'react-dom'
+import Links from '../link/Links'
 
 
 class Galaxy extends Component{
@@ -129,10 +130,20 @@ class Galaxy extends Component{
 
     _renderGalaxy(){
         return <g className='galaxy' transform={'translate('+this.props.x+','+this.props.y+')'}>               
+
+                    <Links 
+                        showPartners={this.props.showPartners}
+                        showChildren={this.props.showChildren}
+                        bodies={this.state.bodies}
+                        comic={this.props.comic}
+                    />
+
                     <g transform='translate(-30,-30)'>
                         <Sun galaxyName={this.props.comic} width={60} height={60}/>
                     </g>
+
                     {this._renderOrbits(this.state.bodies)}
+                
                     {ReactDOM.createPortal(<ReactTooltip 
                         key="Universe-Node-Tooltip"
                         id={`characterTooltip${this.props.comic}`}
@@ -143,8 +154,6 @@ class Galaxy extends Component{
                         delayUpdate={200}                        
                         border={true}
                         html={true}/>,       document.getElementById("tooltips"))}
-                    
-                        
                 </g>
     }
 
@@ -161,7 +170,9 @@ Galaxy.defaultProps = {
         {cx:0, cy:0, rx:190, ry: 120, levels:{min:5, max:6}},
         {cx:0, cy:0, rx:140, ry: 90, levels:{min:7, max:8}},
         {cx:0, cy:0, rx:80, ry: 60, levels:{min:9, max:20}} // smallest ellipse, closer to the sun
-    ]
+    ],
+    showPartners: false,
+    showChildren: false
 }
 
 Galaxy.propTypes = {

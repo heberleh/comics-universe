@@ -1,0 +1,17 @@
+.Link{
+    stroke-width: 0.3px;
+    stroke: gray;
+    stroke-opacity: 0.5 ;
+}
+
+.Links{
+    transform: rotate(37deg);
+}
+
+.Link.Link-child{
+    stroke: aqua;
+}
+
+.Link.Link-partner{
+    stroke: red;
+}
