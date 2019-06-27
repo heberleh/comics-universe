@@ -25,3 +25,9 @@
     fill: rgb(248, 90, 195);
     opacity: 1;    
 }
+
+.Star-label{
+    font-size: 8px;
+    fill: rgb(187, 187, 187);
+    transform: rotate(-37deg)
+}

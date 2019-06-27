@@ -11,14 +11,14 @@ class Orbit extends Component{
     }
 
     _renderLargeBodies(){
-        let largeBodies = this.props.bodies.filter(body=>body.bodyType!=='dust')
+        let largeBodies = this.props.bodies.filter(body=>!body.isDust())
         return largeBodies.map((body, i) => {
             return <Star key={body.data.key} comic={this.props.comic} body={body} />
         })
     }
 
     _renderDust(){ 
-        let dust = this.props.bodies.filter(body=>body.bodyType==='dust')
+        let dust = this.props.bodies.filter(body=>body.isDust())
         return dust.map((body,i) => {
                 return <Star key={body.data.key} comic={this.props.comic} body={body} />
         })

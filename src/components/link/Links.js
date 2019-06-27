@@ -8,9 +8,9 @@ class Links extends Component{
         return this.props.bodies.map(body => {
             return body.data.children.map(child=>{
                 return this._Link(body, 
-                                child.body, 
+                                this.props.bodies.find(d=>d.data.id === child.id), 
                                 'child',
-                                this.props.children ? 'visible':'hidden')
+                                this.props.showChildren ? 'visible':'hidden')
             })
         })            
     }
@@ -19,7 +19,7 @@ class Links extends Component{
         return this.props.bodies.map(body => {
             return body.data.partners.map(partner=>{
                 return this._Link(body, 
-                                partner.body, 
+                                this.props.bodies.find(d=>d.data.id === partner.id),//partner.body, 
                                 'partner', 
                                 this.props.showPartners?'visible':'hidden')
             })

@@ -25,7 +25,9 @@ class Galaxy extends Component{
 
     componentDidMount() {
         console.log("Galaxy Component did mount.")
-        this.setState({bodies: this._createBodies()})
+        if (this.state === undefined || this.state === null || this.state.bodies === undefined){
+            this.setState({bodies: this._createBodies()})
+        }
     }
 
     _averageWorksN(){
@@ -38,6 +40,7 @@ class Galaxy extends Component{
      * Return vector of Body
      */
     _createBodies(){
+        console.log(`state is ${this.state}; creating state.bodies...`)        
         // ? Allow to change this threshold
         let threshold = this._averageWorksN()
 
@@ -49,20 +52,18 @@ class Galaxy extends Component{
 
         this._computeOrbitsBodies(bodies)
 
-        bodies.map(body =>{
+        bodies.forEach(body =>{
             for (let i = 0; i < body.data.children.length; i++){
                 let child = body.data.children[i]                
-                child.body = bodies.find(d=>d.data.id === child.id)
+                child.body = bodies.find(d=>d.data.id === child.id) // url === url
             }
-            return body
         })
 
-        bodies.map(body =>{
+        bodies.forEach(body =>{
             for (let i = 0; i < body.data.partners.length; i++){
                 let partner = body.data.partners[i]
                 partner.body = bodies.find(d=>d.data.id === partner.id)
-            }    
-            return body        
+            }            
         })
         
         return bodies
@@ -72,49 +73,53 @@ class Galaxy extends Component{
     y(ry, t){return ry * Math.sin(t)}
 
 
+    randomSign(){return Math.random()<0.5?-1:1}
+
     /**
      * Set Body.x and Body.y in an Orbit
      * @param {array} bodies array of Body
      * @param {numeric} randomR how x,y will randomly vary
      * @param {function} r d3-scale function
      */
-    _setUpOrbitBodies(rx, ry, randomR, bodies, r, start=1, allbodies){
+    _setUpOrbitBodies(rx, ry, randomR, bodies, r, start=1, allBodies){
         if (r === undefined){
-            let maxWorks = d3max(allbodies, d=>d.data.presentInWorks.length);           
+            let maxWorks = d3max(allBodies, d=>d.data.presentInWorks.length);           
             r = scaleLinear().domain([0, maxWorks]).range([1,10]);    
         }
 
         let dt = 2*Math.PI/bodies.length; 
 
-        bodies.map((body, i) => {
-            let t = dt*(start+i);
+        bodies = bodies.map((body, i) => {
             if (randomR === undefined){
+                let t = dt*(start+i);
                 body.x = this.x(rx, t);
                 body.y = this.y(ry, t);       
             }else{
-                body.x = this.x(rx, t) + ((Math.random()*randomR)+5) *(Math.random()<0.5?-1:1);          
-                body.y = this.y(ry, t) + ((Math.random()*randomR)+5) *(Math.random()<0.5?-1:1);
+                let t = dt*i;
+                body.x = this.x(rx, t) + ((Math.random()*randomR)+5) * this.randomSign();          
+                body.y = this.y(ry, t) + ((Math.random()*randomR)+5) * this.randomSign();
             }
             body.r = r(body.data.presentInWorks.length);
-            return body
+            return body;
         })
     }
 
     _computeOrbitsBodies(bodies){
-        this.orbits.map((orbit, i) =>{
+        this.orbits.forEach((orbit, i) =>{
 
             let orbitBodies = bodies.filter(body => {
                 let size = body.data.abilities.length
                 return  (size <= orbit.levels.max && size >= orbit.levels.min)
-            });
-            
-            // placement of planets and starts
-            this._setUpOrbitBodies(orbit.rx, orbit.ry, undefined, orbitBodies.filter(body => body.bodyType !== 'dust'), undefined, i*10, bodies);
+            });                    
             
             // placement of dust
-            this._setUpOrbitBodies(orbit.rx, orbit.ry, 15, orbitBodies.filter(body => body.bodyType === 'dust'), (d)=>0.5, i*10, bodies);
+            let dust = orbitBodies.filter(body => body.isDust())
+            this._setUpOrbitBodies(orbit.rx, orbit.ry, 15, dust, (d)=>0.5, i*10, bodies);
 
-            return orbit
+            // placement of planets and starts
+            let largeBodies = orbitBodies.filter(body => !body.isDust())
+            this._setUpOrbitBodies(orbit.rx, orbit.ry, undefined, largeBodies, undefined, i*10, bodies);
+ 
         })
     }
 

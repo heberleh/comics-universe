@@ -56,8 +56,8 @@ class Universe extends PureComponent{
                         toolbarProps={{SVGAlignX: 'center', SVGAlignY: 'center'}}>            
                     
                     <svg className="Universe" width={svgWidth} height={svgHeight} styles='background-color:"black"'>
-                        <Galaxy key={'dc-galaxy'} data={this.dcCharacters} comic='dc'             x={435}  y={355}/>
-                        <Galaxy key={'marvel-galaxy'} data={this.marvelCharacters} comic='marvel' x={1150} y={355}/>
+                        <Galaxy key={'dc-galaxy'} data={this.dcCharacters} comic='dc'             x={435}  y={355} showPartners={false} showChildren={false}/>
+                        <Galaxy key={'marvel-galaxy'} data={this.marvelCharacters} comic='marvel' x={1150} y={355} showPartners={false} showChildren={false}/>
                     </svg>
                 </UncontrolledReactSVGPanZoom>
 

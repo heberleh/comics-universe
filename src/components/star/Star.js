@@ -72,6 +72,18 @@ class Star extends PureComponent{
         }
     }
 
+    _renderLabel(){
+        let body = this.props.body
+        let r = body.r*1.3
+        let t = Math.PI/4
+        return <text 
+                    x={r*Math.cos(t)} 
+                    y={r*Math.sin(t)} 
+                    className="Star-label" 
+                    visibility={this.state.selected?'visible':'hidden'}>{body.data.name}
+                </text>
+    }
+
     _expandSelectionArea(r){
         return <circle className='Star-around' cx={0} cy={0} r={r>2?r:2}  styles={'opacity:0.0;'} />
     }
@@ -85,19 +97,28 @@ class Star extends PureComponent{
     _highlightNeighbors(){
         let partners = this.props.body.data.partners
         let children = this.props.body.data.children
-        partners.forEach(partner =>{            
-            partner.body && d3Select("#"+this.props.body.data.key+"_"+partner.body.data.key)
+        
+        partners.forEach(partner =>{
+            if(partner.body !== undefined){
+                // show link
+                d3Select("#"+this.props.body.data.key+"_"+partner.body.data.key)
                                 .attr('visibility', this.state.selected ? 'visible' : 'hidden')
+                // show label
+               this._showLabel(partner.body)
+            }
         })
 
         children.forEach(child =>{            
-            child.body && d3Select("#"+this.props.body.data.key+"_"+child.body.data.key)
-                                .attr('visibility', this.state.selected ? 'visible' : 'hidden')
+            if(child.body !== undefined){
+                d3Select("#"+this.props.body.data.key+"_"+child.body.data.key)
+                    .attr('visibility', this.state.selected ? 'visible' : 'hidden')
+                this._showLabel(child.body)
+            }
         })
     }
 
     handleClick() {
-
+        console.log(this)
         this.setState(state => ({
           selected: !state.selected
         }));        
@@ -106,17 +127,21 @@ class Star extends PureComponent{
     render(){
         let {x, y, r} = this.props.body     
 
-        return <g transform={`translate(${x},${y})`}
+        return <g id={this.props.body.data.key} transform={`translate(${x},${y})`}>
+                    <g
                         data-tip={this._tooltipHtml()}
                         data-for={`characterTooltip${this.props.comic}`}
                         data-html={true}
                         onClick={this.handleClick}
                         >
+                        {this._expandSelectionArea(r)}
+                        {this._renderCircle()}                                                
+                    </g>
+                    <g>
+                        {this._renderLabel()}
+                    </g>    
 
-                    {this._expandSelectionArea(r)}
-
-                    {this._renderCircle()}
-                    {this._highlightNeighbors()}
+                    {this._highlightNeighbors()}                
                 </g>
     }
 }
