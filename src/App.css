@@ -50,5 +50,13 @@
 }
 
 .App-description-container{
-  margin-top: 30px;
+  margin: 30px 60px 30px 60px;  
+}
+
+.App-description-container div{
+  padding: 20px;
+}
+
+.App-author{
+  text-align: right;
 }

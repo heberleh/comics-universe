@@ -66,7 +66,7 @@ class Universe extends PureComponent{
                             key={'marvel-galaxy'}
                             data={this.marvelCharacters}
                             comic='marvel'
-                            x={1150}
+                            x={435}
                             y={355}
                             showPartners={this.state.showPartners}
                             showChildren={this.state.showChildren}
@@ -75,7 +75,7 @@ class Universe extends PureComponent{
                             key={'dc-galaxy'}
                             data={this.dcCharacters}
                             comic='dc'
-                            x={435}
+                            x={1150}
                             y={355}
                             showPartners={this.state.showPartners}
                             showChildren={this.state.showChildren}
@@ -83,12 +83,13 @@ class Universe extends PureComponent{
                     </svg>
                 </UncontrolledReactSVGPanZoom>
                 <hr/>
+                <SearchBox />
                 <button className="Universe-Button Universe-Button-child"
                         onClick={()=>this._setShowChildren(!this.state.showChildren)}>Children</button>
                 <button className="Universe-Button Universe-Button-partner" 
                         onClick={()=>this._setShowPartners(!this.state.showPartners)}>Partners</button>     
 
-                <SearchBox />
+                
                 
                 <Tooltips />
             </div>

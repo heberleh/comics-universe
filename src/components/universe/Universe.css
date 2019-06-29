@@ -22,3 +22,8 @@
     color: red;
     opacity: 0.4;
 }
+
+.Universe-Button:hover{
+    border: 1px solid;
+    border-color: gray;
+}
