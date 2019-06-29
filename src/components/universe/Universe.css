@@ -2,3 +2,23 @@
     max-width: 400px;
     margin: 10px;
 }
+
+
+.Universe-Button{
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+.Universe-Button-child{
+    color: aqua;
+    opacity: 0.4;
+}
+
+.Universe-Button-partner{
+    color: red;
+    opacity: 0.4;
+}

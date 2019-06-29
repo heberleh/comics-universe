@@ -91,6 +91,7 @@ class Star extends PureComponent{
     _showLabel(body){
         d3Select("#"+body.data.key)
             .select('text')
+            .attr('selected', this.state.selected)
             .attr('visibility', this.state.selected ? 'visible' : 'hidden')
     }
 

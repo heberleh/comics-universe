@@ -8,7 +8,7 @@ class LoadDataset{
         let characters = []
         json.forEach(d=>{
                 let char = new Character(
-                            d._id, 
+                            d.id, 
                             d.name, 
                             d.gender, 
                             d.birthDate, 
@@ -17,7 +17,7 @@ class LoadDataset{
                             d._children, 
                             d._presentInWorks, 
                             d._occupations );
-                characters.push(char)
+                characters.push(char)                
             }    
         );
         return characters

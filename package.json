@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "d3-array": "2.2.0",
     "d3-scale": "3.0.0",
     "d3-selection": "1.4.0",
     "jquery": "3.4.1",
+    "popper": "^1.0.1",
+    "popper.js": "^1.15.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "0.9.5",

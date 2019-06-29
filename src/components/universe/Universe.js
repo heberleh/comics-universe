@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react'
 import Galaxy from '../galaxy/Galaxy'
 import LoadDataset from '../../../src/dataset/LoadDataset'
+import SearchBox from '../SearchBox'
 import './Universe.css'
 import './../star/Star.css'
 
@@ -17,6 +18,10 @@ class Universe extends PureComponent{
     constructor(props){
         super(props)
 
+        this.state = {showPartners: false, showChildren: false}
+        this._setShowChildren = this._setShowChildren.bind(this)
+        this._setShowPartners = this._setShowPartners.bind(this)
+
         this.Viewer = null
 
         this.marvelCharacters = LoadDataset.marvelData()
@@ -31,7 +36,14 @@ class Universe extends PureComponent{
 
     componentDidMount() {
         this.Viewer.fitToViewer();    
-    }    
+    }
+
+    _setShowChildren(b){
+        this.setState({showChildren: b})        
+    }
+    _setShowPartners(b){
+        this.setState({showPartners: b})
+    }
 
     render(){
         console.log("dimensions***", this.props.width, this.props.height)
@@ -39,12 +51,6 @@ class Universe extends PureComponent{
         let svgHeight = 700
         return (
             <div id='div-universe'>                        
-                {/* <button className="btn" onClick={() => this.Viewer.zoomOnViewerCenter(1.1)}>Zoom in</button>
-                <button className="btn" onClick={() => this.Viewer.fitSelection(40, 40, 200, 200)}>Zoom area 200x200</button>
-                <button className="btn" onClick={() => this.Viewer.fitToViewer()}>Fit</button>
-
-                <hr/> */}
-
                 <UncontrolledReactSVGPanZoom
                         key="Universe-View"                  
                         className='Universe-viewer'                 
@@ -56,11 +62,34 @@ class Universe extends PureComponent{
                         toolbarProps={{SVGAlignX: 'center', SVGAlignY: 'center'}}>            
                     
                     <svg className="Universe" width={svgWidth} height={svgHeight} styles='background-color:"black"'>
-                        <Galaxy key={'dc-galaxy'} data={this.dcCharacters} comic='dc'             x={435}  y={355} showPartners={false} showChildren={false}/>
-                        <Galaxy key={'marvel-galaxy'} data={this.marvelCharacters} comic='marvel' x={1150} y={355} showPartners={false} showChildren={false}/>
+                        <Galaxy 
+                            key={'marvel-galaxy'}
+                            data={this.marvelCharacters}
+                            comic='marvel'
+                            x={1150}
+                            y={355}
+                            showPartners={this.state.showPartners}
+                            showChildren={this.state.showChildren}
+                        />
+                        <Galaxy
+                            key={'dc-galaxy'}
+                            data={this.dcCharacters}
+                            comic='dc'
+                            x={435}
+                            y={355}
+                            showPartners={this.state.showPartners}
+                            showChildren={this.state.showChildren}
+                        />
                     </svg>
                 </UncontrolledReactSVGPanZoom>
+                <hr/>
+                <button className="Universe-Button Universe-Button-child"
+                        onClick={()=>this._setShowChildren(!this.state.showChildren)}>Children</button>
+                <button className="Universe-Button Universe-Button-partner" 
+                        onClick={()=>this._setShowPartners(!this.state.showPartners)}>Partners</button>     
 
+                <SearchBox />
+                
                 <Tooltips />
             </div>
         )
