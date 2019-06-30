@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { scaleLinear } from 'd3-scale'
-import { interpolateLab } from 'd3-interpolate'
+// import { scaleLinear } from 'd3-scale'
+// import { interpolateLab } from 'd3-interpolate'
 
 
 class Bars extends Component{
@@ -16,10 +16,8 @@ class Bars extends Component{
       }
     
       render() {
-        const { scales, margins, dataModel, svgDimensions } = this.props
+        const { scales, margins, dataModel} = this.props
         const { xScale, yScale } = scales
-        const { width, height } = svgDimensions
-  
 
         const bars = (
           dataModel.data.map(d =>
@@ -29,7 +27,7 @@ class Bars extends Component{
               
               x={margins.left}
               y={yScale(dataModel.bandFunc(d))}
-              width={dataModel.valueFunc(d)==0? 0: xScale(dataModel.valueFunc(d))}
+              width={dataModel.valueFunc(d)===0? 0: xScale(dataModel.valueFunc(d))}
               height={yScale.bandwidth()}              
               total={dataModel.valueFunc(d)}
             

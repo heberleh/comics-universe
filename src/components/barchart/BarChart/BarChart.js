@@ -78,7 +78,7 @@ class BarChart extends Component{
 }
 
 BarChart.defaultProps = {
-    width: 700,
+    width: 450,
     height: 1200,
     margins: {top: 50, right: 20, bottom: 100, left: 200 },
     parsPadding: 0.5

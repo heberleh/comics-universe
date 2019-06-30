@@ -13,3 +13,11 @@
     fill: #E8895B;
 }
 
+.BarChart-Occupation-male{
+    fill: rgb(50, 50, 51);
+}
+
+.BarChart-Occupation-nonMale{
+    fill: #E8895B;
+}
+

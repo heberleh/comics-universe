@@ -99,6 +99,76 @@ class LoadDataset{
         
         return model
     }
+
+
+    static occupationsDataModel(data){
+        let model = {data: [], valueFunc: d=>d.total, bandFunc: d=>d.label, classFunc: d=>d.cssClass}
+       
+        let count = {} // count number of char. has each occupation
+        let countMale = {} // do the same for males
+        let countNonMale = {} //do the same for nonMales = #males - #undefined
+
+        model.count = count
+        model.countMale = countMale
+        model.countNonMale = countNonMale
+
+        function countAb(counter, occupation){
+            if(occupation in counter){
+                return counter[occupation]
+            }else{
+                return 0
+            }
+        }
+
+        function incrementCount(counter, occupation){
+            if (occupation in counter){
+                counter[occupation] +=1
+            }else{
+                counter[occupation] = 1
+            }
+        }
+
+        model.getTooltipHtml = (model, d) => {
+            let occupation = model.bandFunc(d)
+            return "<div style='max-width:400px'><b>"+
+                    occupation+"</b><br><br>"+
+                    "<b>" + countAb(model.count, occupation) + "</b> in total <br>"+
+                    countAb(model.countMale, occupation) + " males and " +
+                    countAb(model.countNonMale, occupation) + " females, transgender or other<br><br>" + 
+                    d.names.join(', ')+"</div>"
+        }
+
+        let names = {}
+        data.forEach(char => {
+            char.occupations.forEach(occupation => {
+                
+                names[occupation] === undefined? names[occupation] = [char.name] : names[occupation].push(char.name)
+
+                incrementCount(count, occupation)
+                if (char.gender !== undefined){
+                    if (char.gender === 'male'){
+                        incrementCount(countMale, occupation)
+                    }else{
+                        incrementCount(countNonMale, occupation)
+                    }                    
+                }
+            })
+        })
+
+
+        for(let occupation in count){
+            let occupationData = {}
+            occupationData.total = count[occupation]
+            occupationData.label = occupation
+            occupationData.cssClass = countAb(countMale, occupation) >= countAb(countNonMale, occupation) ? 'BarChart-Occupation-male' : 'BarChart-Occupation-nonMale'
+            occupationData.names = names[occupation]           
+            model.data.push(occupationData)
+        }
+
+        model.data.sort((a,b) => (a.total > b.total) ? 1 : ((b.total > a.total) ? -1 : 0))
+        
+        return model
+    }
 }
 
 export default LoadDataset

@@ -4,14 +4,14 @@ import Axis from './Axis'
 
 export default ({minSize, scales, margins, svgDimensions, ticks, dataModel}) => {
 
-  const xProps = {
-    orient: 'Bottom',
-    scale: scales.xScale,
-    translate: `translate(0, ${svgDimensions.height - margins.bottom})`,
-    tickSize: svgDimensions.height - margins.top - margins.bottom,
-    ticks: ticks.x.ticks,
-    tickPadding: ticks.x.tickPadding
-  }
+  // const xProps = {
+  //   orient: 'Bottom',
+  //   scale: scales.xScale,
+  //   translate: `translate(0, ${svgDimensions.height - margins.bottom})`,
+  //   tickSize: svgDimensions.height - margins.top - margins.bottom,
+  //   ticks: ticks.x.ticks,
+  //   tickPadding: ticks.x.tickPadding
+  // }
 
   const yProps = {
     orient: 'Left',

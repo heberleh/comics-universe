@@ -56,7 +56,7 @@ class App extends Component {
 
     // n: filter by minimum Number of works (n)
     function percentageMale(data, n){
-      return parseInt(data.reduce((a,b)=>{return countGender(a,b,'male',n)},0)/data.reduce((a,b)=>countTotalGender(a,b,n),0)*100)
+      return parseInt(data.reduce((a,b)=>{return countGender(a,b,'male',n)},0)/data.reduce((a,b)=>countTotalGender(a,b,n),0)*100,0)
     }
 
     return (
@@ -82,7 +82,7 @@ class App extends Component {
 
                <p>On the left you find a description of the visualization attributes. In summary: <b>size</b> and <b>color</b> represent the number of works the characters are present in, or derived works; <b>white</b> is used to highlight the ones are not male. The closer the orbit (ellipses) is to its Sun, the more <b>super abilities</b> the characters have.</p>
 
-              <p>As expected, in both Marvel and DC galaxies we find females and other non-male genders as minorities in most of works. This can be concluded by checking the amount of white circles in each Galaxy. More precisely, excluding characters with undefined gender, <b>{percentageMale(marvelData, 10)}%</b> of Marvel's characters and <b>{percentageMale(dcData, 10)}%</b> of DC's characters present in <b>more than 10 works</b> are male.</p>
+              <p>As expected, in both Marvel and DC galaxies we find females and other non-male genders as minorities in most of the works. This can be concluded by checking the amount of white circles in each galaxy. More precisely, excluding characters with undefined gender, <b>{percentageMale(marvelData, 10)}%</b> of Marvel's characters and <b>{percentageMale(dcData, 10)}%</b> of DC's characters present in <b>over 10 works</b> are male.</p>
               
               <p> Those numbers get more balanced when we consider characters that appear in fewer works: {percentageMale(marvelData, 0)}% (Marvel) and {percentageMale(dcData, 0)}% (DC) when considering characters with at least 1 work registered on Wikipedia; and {percentageMale(marvelData, -1)}% (Marvel) and {percentageMale(dcData, -1)}% (DC) when considering characters with 0 or more registered works. Below, you find bar charts that represent the distributions of abilities and of occupations, with gender counts and character names in the tooltips.</p>
 
@@ -98,17 +98,22 @@ class App extends Component {
           </div>
 
           <div className="row">
-            <div className="col-sm-12 col-lg-6">
-              <h1>Marvel</h1>
-
-              
-              <BarChart title="Abilities" dataModel={LoadDataset.abilitiesDataModel(marvelData)} key="Abilities"/>
+            <div className="col-sm-12 col-lg-6">              
+              <div>
+                <BarChart title="Marvel - Abilities" dataModel={LoadDataset.abilitiesDataModel(marvelData)} key="Abilities-Marvel"/>
+              </div>
+              <div>
+                <BarChart title="Marvel - Occupations" height={3500} dataModel={LoadDataset.occupationsDataModel(marvelData)} key="Occupations-Marvel"/>
+              </div>              
             </div>
             <div className="col-sm-12 col-lg-6">
-              <h1>DC</h1>
+              <div>
+                <BarChart title="DC - Abilities" dataModel={LoadDataset.abilitiesDataModel(dcData)} key="Abilities-DC"/>
+              </div>
+              <div>
+                <BarChart title="DC - Occupations" height={4000} dataModel={LoadDataset.occupationsDataModel(dcData)} key="Occupations-DC"/>
+              </div>
 
-              
-              <BarChart title="Abilities" dataModel={LoadDataset.abilitiesDataModel(dcData)} key="Occupation"/>
             </div>
           </div>
 

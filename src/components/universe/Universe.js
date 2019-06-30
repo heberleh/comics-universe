@@ -34,7 +34,9 @@ class Universe extends PureComponent{
     }
 
     componentDidMount() {
+        this.Viewer.closeMiniature();
         this.Viewer.fitToViewer();    
+        
     }
 
     _setShowChildren(b){
@@ -51,11 +53,12 @@ class Universe extends PureComponent{
         return (
             <div id='div-universe'>                        
                 <UncontrolledReactSVGPanZoom
-                        key="Universe-View"                  
+                        key="Universe-View" 
+                        detectAutoPan={false}              
                         className='Universe-viewer'                 
                         width={this.props.width} height={this.props.height}
                         ref={Viewer => this.Viewer = Viewer}
-                        onClick={event => console.log('click', event.x, event.y, event.originalEvent)}
+                        //onClick={event => console.log('click', event.x, event.y, event.originalEvent)}
                         background='black'
                         SVGBackground='black'
                         toolbarProps={{SVGAlignX: 'center', SVGAlignY: 'center'}}>            

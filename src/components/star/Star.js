@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 import './Star.css'
-import {select as d3Select, selectAll as d3SelectAll} from 'd3-selection'
+import {select as d3Select} from 'd3-selection'
 
 class Star extends PureComponent{
 
