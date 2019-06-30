@@ -1,0 +1,19 @@
+{
+  "main.css": "/comics-universe/static/css/main.b507c66d.chunk.css",
+  "main.js": "/comics-universe/static/js/main.96fedf73.chunk.js",
+  "main.js.map": "/comics-universe/static/js/main.96fedf73.chunk.js.map",
+  "runtime~main.js": "/comics-universe/static/js/runtime~main.4937bc1c.js",
+  "runtime~main.js.map": "/comics-universe/static/js/runtime~main.4937bc1c.js.map",
+  "static/css/2.90222e37.chunk.css": "/comics-universe/static/css/2.90222e37.chunk.css",
+  "static/js/2.9310b570.chunk.js": "/comics-universe/static/js/2.9310b570.chunk.js",
+  "static/js/2.9310b570.chunk.js.map": "/comics-universe/static/js/2.9310b570.chunk.js.map",
+  "index.html": "/comics-universe/index.html",
+  "precache-manifest.8078c51a569f061c9dbaefd2e9f5d17e.js": "/comics-universe/precache-manifest.8078c51a569f061c9dbaefd2e9f5d17e.js",
+  "service-worker.js": "/comics-universe/service-worker.js",
+  "static/css/2.90222e37.chunk.css.map": "/comics-universe/static/css/2.90222e37.chunk.css.map",
+  "static/css/main.b507c66d.chunk.css.map": "/comics-universe/static/css/main.b507c66d.chunk.css.map",
+  "static/media/legend.png": "/comics-universe/static/media/legend.02c3897c.png",
+  "static/media/sunDc.svg": "/comics-universe/static/media/sunDc.3eda8d5a.svg",
+  "static/media/sunDefault.svg": "/comics-universe/static/media/sunDefault.aab39a19.svg",
+  "static/media/sunMarvel.svg": "/comics-universe/static/media/sunMarvel.4283419d.svg"
+}
