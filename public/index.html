@@ -8,7 +8,9 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     
     <meta property="og:title" content="Marvel & Dc Universe">
-    <meta property="og:description" content="Visualize network and explore their super abilities, occupations, gender and more.">
+    <meta property="og:type" content="visualization" />
+
+    <meta property="og:description" content="Visualize the character networks and explore their super abilities, occupations, gender and more.">
     <meta property="og:image" content="https://heberleh.github.io/comics-universe/legend.png">
     <meta property="og:url" content="https://heberleh.github.io/comics-universe/">
 
@@ -38,9 +40,26 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    
     <title>Marvel & DC Universe</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139352256-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-139352256-2');
+    </script>
   </head>
   <body>
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3"></script>    
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    
     <div id="root"></div>
     <!--
       This HTML file is a template.

@@ -77,8 +77,24 @@ class App extends Component {
                 <img className="img-fluid" alt="Legend" src={legend}/>
             </div>
             <div className="col-sm-12 col-lg-6">
+
+              <div style={{textAlign: 'right'}}>
+                  <div class="social">
+                    <span class="twitter">
+                      <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+                    </span>
+                    <span class="github">
+                      <a class="github-button" href="https://github.com/heberleh/comics-universe" data-show-count="true" aria-label="Star heberleh/comics-universe on GitHub">Star</a>
+                    </span>
+                    <span class="Facebook">
+                      <span class="fb-share-button" data-href="https://heberleh.github.io/comics-universe/" data-layout="button_count" data-size="small">
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fheberleh.github.io%2Fcomics-universe%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+                      </span>
+                    </span>
+                  </div>
+              </div>
                <p>:: <b>Comics Universe</b> ::</p> 
-               <p>Marvel and DC galaxies were created with Wikipedia data extracted in Jun 2019, which are instances of <b>fictional character</b>. If you are a comic expert, consider using the visualization to identify gaps in the data and contribute to <a href="https://en.wikipedia.org/wiki/Wikipedia:Contributing_to_Wikipedia" target="_blank" rel="noopener noreferrer">Wikipedia</a> and <a href="https://www.wikidata.org/wiki/Wikidata:Contribute" target="_blank" rel="noopener noreferrer">Wikidata</a>. You may also contribute to this project by creating a <a href="https://github.com/heberleh/comics-universes" target="_blank" rel="noopener noreferrer"><b>Github</b></a> pull request, or just fav. or fork it to let me know. The system is coded in Javascript, React and D3.</p>
+               <p>Marvel and DC galaxies were created with Wikipedia data extracted in Jun 2019. They are composed by instances of <b><i>fictional character</i></b>. If you are a comic expert, consider using the visualization to identify gaps in the data and contribute to <a href="https://en.wikipedia.org/wiki/Wikipedia:Contributing_to_Wikipedia" target="_blank" rel="noopener noreferrer">Wikipedia</a> and <a href="https://www.wikidata.org/wiki/Wikidata:Contribute" target="_blank" rel="noopener noreferrer">Wikidata</a>. You may also contribute to this project by creating a <a href="https://github.com/heberleh/comics-universes" target="_blank" rel="noopener noreferrer"><b>Github</b></a> pull request, or just fav. or fork it to let me know. The system is coded in Javascript, React and D3.</p>
 
                <p>On the left you find a description of the visualization attributes. In summary: <b>size</b> and <b>color</b> represent the number of works the characters are present in, or derived works; <b>white</b> is used to highlight the ones are not male. The closer the orbit (ellipses) is to its Sun, the more <b>super abilities</b> the characters have.</p>
 
@@ -92,6 +108,10 @@ class App extends Component {
               <div className="App-author">
                 <p>Feel free to contact me by e-mail or any other media.</p>
                 <p>Henry Heberle, Phd</p>
+                <p><a href="https://twitter.com/h_heberle?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @h_heberle</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+                
+                <a class="github-button" href="https://github.com/heberleh" aria-label="Follow @heberleh on GitHub">Follow @heberleh</a>
+
               </div>
             </div>
 

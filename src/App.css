@@ -6,6 +6,16 @@
   margin: 0 0 0 0;
 }
 
+/* This gets Google to fall into place */
+.social {
+	font-size: 1px;
+}
+
+/* Set an optional width for your button wrappers */
+.social span {
+	display: inline-block;
+	width: 110px;
+}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
