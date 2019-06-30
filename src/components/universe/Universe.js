@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react'
 import Galaxy from '../galaxy/Galaxy'
-import LoadDataset from '../../../src/dataset/LoadDataset'
 import SearchBox from '../SearchBox'
 import './Universe.css'
 import './../star/Star.css'
@@ -24,11 +23,11 @@ class Universe extends PureComponent{
 
         this.Viewer = null
 
-        this.marvelCharacters = LoadDataset.marvelData()
-        this.dcCharacters = LoadDataset.dcData()
+        this.marvelCharacters = props.marvelData
+        this.dcCharacters = props.dcData
 
-        this.marvelCharacters.sort((a,b)=> (a,b) => (a.initials > b.initials) ? 1 : ((b.initials > a.initials) ? -1 : 0))
-        this.dcCharacters.sort((a,b)=> (a,b) => (a.initials > b.initials) ? 1 : ((b.initials > a.initials) ? -1 : 0))
+        this.marvelCharacters.sort((a,b) => (a.initials > b.initials) ? 1 : ((b.initials > a.initials) ? -1 : 0))
+        this.dcCharacters.sort((a,b) => (a.initials > b.initials) ? 1 : ((b.initials > a.initials) ? -1 : 0))
 
         if (this.dcCharacters === undefined) {throw new Error("ComicsQueries.saveDcCharacters() should be executed to save the data")}
         if (this.marvelCharacters === undefined) {throw new Error("ComicsQueries.saveMarvelCharacters() should be executed to save the data")}

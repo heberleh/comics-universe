@@ -1,0 +1,15 @@
+.testing-colors{
+    color:  #2a2b83 #ac4a59 #5cb5d8 #61f574 #f17341;
+    color: #E8895B #A2DA3D, #EFF4C3, #10101C;
+    color: #E8895B #A2DA3D,  #38397C, #10101C;
+}
+
+
+.BarChart-Ability-male{
+    fill: rgb(50, 50, 51);
+}
+
+.BarChart-Ability-nonMale{
+    fill: #E8895B;
+}
+

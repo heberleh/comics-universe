@@ -1,0 +1,24 @@
+.Axis path,
+.Axis line {
+  stroke: #E0E0E0;
+}
+
+.Axis-Band line,
+.Axis-Band path,
+.Axis-Bottom line,
+.Axis-Bottom path {
+  stroke-opacity: 0 ;
+}
+
+
+.Axis text {
+  font-size: 11px;
+  fill: rgb(136, 138, 226);
+}
+
+.Axis-Bottom text{
+  transform: rotate(-45deg);
+  text-anchor: end;
+  fill: none;
+}
+
