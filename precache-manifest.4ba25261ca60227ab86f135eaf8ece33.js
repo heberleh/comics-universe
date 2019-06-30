@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/comics-universe/static/css/2.90222e37.chunk.css"
   },
   {
-    "revision": "bdfb91473b0c680400aeeafb761db0c2",
+    "revision": "39de1bc2e0b92c82a4962fe93542c39d",
     "url": "/comics-universe/index.html"
   }
 ];
