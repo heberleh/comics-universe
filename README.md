@@ -8,6 +8,6 @@ Each planet/star/dust is a character. You can explore the visualization to under
 
 ![Legend](https://github.com/heberleh/comics-universe/blob/master/src/static/images/legend.png)
 
-Check out [here](https://heberleh.github.io/comics-universe/)
+Check the visualization [here](https://heberleh.github.io/comics-universe/)
 
 Please share if you like it :)
