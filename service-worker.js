@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/comics-universe/precache-manifest.8078c51a569f061c9dbaefd2e9f5d17e.js"
+  "/comics-universe/precache-manifest.5321c061b3e92a206a0287650ee4a5ba.js"
 );
 
 workbox.clientsClaim();
