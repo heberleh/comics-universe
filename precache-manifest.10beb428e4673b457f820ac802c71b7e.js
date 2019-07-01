@@ -20,15 +20,15 @@ self.__precacheManifest = [
     "url": "/comics-universe/static/js/runtime~main.4937bc1c.js"
   },
   {
-    "revision": "5d2f56e012b3149fb683",
-    "url": "/comics-universe/static/js/main.2da01de2.chunk.js"
+    "revision": "721f3757d05e23774b25",
+    "url": "/comics-universe/static/js/main.0b2ca710.chunk.js"
   },
   {
     "revision": "18f240c2db2e491a73e3",
     "url": "/comics-universe/static/js/2.9310b570.chunk.js"
   },
   {
-    "revision": "5d2f56e012b3149fb683",
+    "revision": "721f3757d05e23774b25",
     "url": "/comics-universe/static/css/main.b918d606.chunk.css"
   },
   {
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/comics-universe/static/css/2.90222e37.chunk.css"
   },
   {
-    "revision": "4033ec1099507feadbee81a74ba134b7",
+    "revision": "98648c07363b2983b79031adeee2497b",
     "url": "/comics-universe/index.html"
   }
 ];
